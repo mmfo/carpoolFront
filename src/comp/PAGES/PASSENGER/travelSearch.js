@@ -131,7 +131,7 @@ export default function TravelSearch() {
         // justifyContent="center"
         // alignItems="start"
         alignContent="flex-start"
-        display="flex"
+        // display="flex"
       >
      
         <Grid item xs>
@@ -208,7 +208,6 @@ export default function TravelSearch() {
             onUnmount={onUnmount}
           >
             <Marker position={center} />
-            {/* Child components, such as markers, info windows, etc. */}
             <></>
           </GoogleMap>
         ) : (

@@ -9,6 +9,7 @@ export default function Home() {
             <h1>Home</h1>
             <section>
                 <div>
+                    
                     <h2>driver</h2>
                     <button onClick={() =>navigate('/addTravel') }>addTravel</button>        
                     <button onClick={() =>navigate('/driverTravel') }>driverTravel</button> 
