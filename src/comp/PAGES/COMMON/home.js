@@ -39,11 +39,6 @@ export default function Home() {
           driverTravel
         </Button>
       </div>
-
-      {/* <button onClick={() => navigate("/addTravel")}>addTravel</button>
-          <button onClick={() => navigate("/driverTravel")}>
-            driverTravel
-          </button> */}
       <h2>passenger</h2>
       <div
         style={{
@@ -68,14 +63,6 @@ export default function Home() {
         travelSearch
       </Button>
       </div>
-      {/* <button onClick={() => navigate("/passengerTravel")}>
-            passengerTravel
-          </button>
-          <button onClick={() => navigate("/travelSearch")}>
-            travelSearch
-          </button> */}
-      {/* </div> */}
-      {/* </section> */}
     </Box>
   );
 }

@@ -96,7 +96,6 @@ const handleSubmit = async (e) => {
     }
   });
   if (Object.keys(validationErrors).length > 0) {
-    // this.setState({ errors: validationErrors });
     setErrors(validationErrors)
     return;
   }
@@ -113,10 +112,9 @@ const handleSubmit = async (e) => {
       UserEmail: userObj.UserEmail,
       UserPassword: userObj.UserPassword,
     };
-    window.alert("נשלח בהצלחה!", JSON.stringify(data));
     console.log("----data----", data);
     var res = await Users.createUser(userObj)
-
+    window.alert("נשלח בהצלחה!", JSON.stringify(data));
     if (res.ok)//??
       navigate('/')
   }

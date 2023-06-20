@@ -88,7 +88,6 @@ export default function Login() {
           }
         });
         if (Object.keys(validationErrors).length > 0) {
-          // this.setState({ errors: validationErrors });
           setErrors(validationErrors)
           return;
         }

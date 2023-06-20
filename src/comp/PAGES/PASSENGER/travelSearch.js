@@ -1,11 +1,10 @@
-import React, { useState,useEffect ,useCallback,useMemo} from "react";
-
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 import { useNavigate } from "react-router-dom";
 import CardTravel from "./cardTravel";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import Travel from "../../SERVICES/TravelService";
-
 // import {
 //   Autocomplete as MuiAutocomplete,
 //   TextField,
@@ -49,9 +48,6 @@ export default function TravelSearch() {
     TimeTravel: new Date(),
     freeSpace: 1,
   });
-  const [options, setOptions] = useState([]);
-  const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState("");
 
   const [foundTravelList, setFoundTravelList] = useState([]);
   const [switchCecked, setSwitchCecked] = useState(true);
@@ -108,7 +104,7 @@ export default function TravelSearch() {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c",
+    googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c",//map
   });
 
   const [map, setMap] = useState(null);
@@ -123,53 +119,28 @@ export default function TravelSearch() {
     setMap(null);
   }, []);
 
-  const autocompleteService = { current: null };
-
-  const fetch = useMemo(
-    () =>
-      debounce((request, callback) => {
-        autocompleteService.current.getPlacePredictions(request, callback);
-      }, 400),
-    []
-  );
-
-  useEffect(() => {
-    let active = true;
-
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current =
-        new window.google.maps.places.AutocompleteService();
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
-
-    if (inputValue === "") {
-      setOptions(value ? [value] : []);
-      return undefined;
-    }
-
-    fetch({ input: inputValue }, (results) => {
-      if (active) {
-        let newOptions = [];
-
-        if (value) {
-          newOptions = [value];
-        }
-
-        if (results) {
-          newOptions = [...newOptions, ...results];
-        }
-
-        setOptions(newOptions);
-      }
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [value, inputValue, fetch]);
-
+  const { ref: materialRefSource } = usePlacesWidget({
+    apiKey: { apikey },
+    //style:{ width: "70%" },
+    onPlaceSelected: (place) => {
+      handleSourceAddressSelect(place);
+    },
+    options: {
+      types: ["address"],
+      componentRestrictions: { country: "il" },
+    },
+  });
+  const { ref: materialRefDest } = usePlacesWidget({
+    apiKey: { apikey },
+    //style:{ width: "70%" },
+    onPlaceSelected: (place) => {
+      handleDestAddressSelect(place);
+    },
+    options: {
+      types: ["address"],
+      componentRestrictions: { country: "il" },
+    },
+  });
   return (
     <>
       <Typography color="primary" variant="h4">
@@ -203,155 +174,27 @@ export default function TravelSearch() {
           <Grid item xs>
             {switchCecked ? (
               <>
-                <Autocomplete
-                  id="google-map-demo"
-                  // sx={{ width: 300 }}
-                  getOptionLabel={(option) =>
-                    typeof option === "string" ? option : option.description
-                  }
-                  filterOptions={(x) => x}
-                  options={options}
-                  autoComplete
-                  includeInputInList
-                  filterSelectedOptions
-                  value={value}
-                  noOptionsText="No locations"
-                  onPlaceSelected={(place) => {
-                    handleSourceAddressSelect(place);
-                  }}
-                  // onChange={(event, newValue) => {
-                  //   setOptions(newValue ? [newValue, ...options] : options);
-                  //   setValue(newValue);
-                  // }}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Source" fullWidth />
-                  )}
-                  renderOption={(props, option) => {
-                    const matches =
-                      option.structured_formatting
-                        .main_text_matched_substrings || [];
+                <div style={{ width: "400px", marginTop: "20px" }}>
+                  <span style={{ color: "pink" }}>Source</span>
+                  <TextField
+                    fullWidth
+                    color="secondary"
+                    variant="outlined"
+                    inputRef={materialRefSource}
+                  />
+                </div>
+                <div style={{ width: "400px", marginTop: "20px" }}>
+                  <span style={{ color: "pink" }}>Dest</span>
+                  <TextField
+                    fullWidth
+                    color="secondary"
+                    variant="outlined"
+                    noOptionsText="No locations"
+                    label="No locations"
 
-                    const parts = parse(
-                      option.structured_formatting.main_text,
-                      matches.map((match) => [
-                        match.offset,
-                        match.offset + match.length,
-                      ])
-                    );
-
-                    return (
-                      <li {...props}>
-                        <Grid container alignItems="center">
-                          <Grid item sx={{ display: "flex", width: 44 }}>
-                            <LocationOnIcon sx={{ color: "text.secondary" }} />
-                          </Grid>
-                          <Grid
-                            item
-                            sx={{
-                              width: "calc(100% - 44px)",
-                              wordWrap: "break-word",
-                            }}
-                          >
-                            {parts.map((part, index) => (
-                              <Box
-                                key={index}
-                                component="span"
-                                sx={{
-                                  fontWeight: part.highlight
-                                    ? "bold"
-                                    : "regular",
-                                }}
-                              >
-                                {part.text}
-                              </Box>
-                            ))}
-                            <Typography variant="body2" color="text.secondary">
-                              {option.structured_formatting.secondary_text}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </li>
-                    );
-                  }}
-                />
-
-                <Autocomplete
-                  id="google-map-demo"
-                  getOptionLabel={(option) =>
-                    typeof option === "string" ? option : option.description
-                  }
-                  filterOptions={(x) => x}
-                  options={options}
-                  autoComplete
-                  includeInputInList
-                  filterSelectedOptions
-                  value={value}
-                  noOptionsText="No locations"
-                  onPlaceSelected={(place) => {
-                    handleDestAddressSelect(place);
-                  }}
-                  // onChange={(event, newValue) => {
-                  //   setOptions(newValue ? [newValue, ...options] : options);
-                  //   setValue(newValue);
-                  // }}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Dest" fullWidth />
-                  )}
-                  renderOption={(props, option) => {
-                    const matches =
-                      option.structured_formatting
-                        .main_text_matched_substrings || [];
-
-                    const parts = parse(
-                      option.structured_formatting.main_text,
-                      matches.map((match) => [
-                        match.offset,
-                        match.offset + match.length,
-                      ])
-                    );
-
-                    return (
-                      <li {...props}>
-                        <Grid container alignItems="center">
-                          <Grid item sx={{ display: "flex", width: 44 }}>
-                            <LocationOnIcon sx={{ color: "text.secondary" }} />
-                          </Grid>
-                          <Grid
-                            item
-                            sx={{
-                              width: "calc(100% - 44px)",
-                              wordWrap: "break-word",
-                            }}
-                          >
-                            {parts.map((part, index) => (
-                              <Box
-                                key={index}
-                                component="span"
-                                sx={{
-                                  fontWeight: part.highlight
-                                    ? "bold"
-                                    : "regular",
-                                }}
-                              >
-                                {part.text}
-                              </Box>
-                            ))}
-                            <Typography variant="body2" color="text.secondary">
-                              {option.structured_formatting.secondary_text}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </li>
-                    );
-                  }}
-                />
-
+                    inputRef={materialRefDest}
+                  />
+                </div>
                 <TextField
                   type="number"
                   defaultValue="1"
@@ -361,13 +204,13 @@ export default function TravelSearch() {
                 />
               </>
             ) : (
-              <>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="נסיעה קבועה"
-                />
-              </>
-            )}
+                <>
+                  <FormControlLabel
+                    control={<Checkbox defaultChecked />}
+                    label="נסיעה קבועה"
+                  />
+                </>
+              )}
           </Grid>
 
           <div
@@ -411,8 +254,8 @@ export default function TravelSearch() {
             <></>
           </GoogleMap>
         ) : (
-          <>gkjfdkldkl</>
-        )}
+            <>gkjfdkldkl</>
+          )}
       </Box>
     </>
   );
