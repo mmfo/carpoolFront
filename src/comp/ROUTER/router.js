@@ -15,7 +15,7 @@ import FoundTravel from '../PAGES/PASSENGER/foundTravel'
 export default function Router() {
     return (
         <BrowserRouter>
-        <ButtonAppBar></ButtonAppBar>
+        <ButtonAppBar/>
             {/* <NavBar></NavBar> */}
             <Routes>
                 {/* COMMON */}
