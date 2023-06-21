@@ -4,7 +4,9 @@ import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import AutocompleteReactGoogle, { usePlacesWidget } from "react-google-autocomplete";
+import AutocompleteReactGoogle, {
+  usePlacesWidget,
+} from "react-google-autocomplete";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -222,66 +224,97 @@ export default function AddTravel() {
   });
   return (
     <>
-      <h1>AddTravel</h1>
+      <Box
+        style={{
+          marginTop: "30px",
+        }}
+      >
+        <Typography color="primary" variant="h4">
+          AddTravel
+        </Typography>
+      </Box>
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "95%" },
+          "& .MuiTextField-root": { m: 1.5, width: "95%" },
           margin: "0 auto",
           maxWidth: "400px",
           textAlign: "center",
-          // backgroundColor: "pink",
-          padding: "60px",
+          padding: "20px",
         }}
       >
-         
-
-        <div style={{ width: "400px", marginTop: "20px" }}>
-          <span style={{ color: "pink" }}>Source</span>
+        <Box style={{ width: "400px" }}>
+          <Typography
+            style={{
+              display: "flex",
+            }}
+          >
+            Source
+          </Typography>
           <TextField
             fullWidth
             color="secondary"
             variant="outlined"
             inputRef={materialRefSource}
+            label="Enter location"
+            noOptionsText="No locations"
           />
-        </div>
+        </Box>
 
+        {(errors.SourceCity ||
+          errors.SourceStreet ||
+          errors.SourceHouseNumber) && (
+          <Alert severity="error">
+            {errors.SourceCity} {errors.SourceStreet} {errors.SourceHouseNumber}
+          </Alert>
+        )}
 
-        {/* <span style={{ color: "red" }} className="text-danger"> */}
-        <Alert severity="error">
-          {errors.SourceCity} {errors.SourceStreet} {errors.SourceHouseNumber}
-        </Alert>
-
-        <div style={{ width: "400px", marginTop: "20px" }}>
-          <span style={{ color: "pink" }}>Dest</span>
+        <Box style={{ width: "400px" }}>
+          <Typography
+            style={{
+              //  color: "pink" ,
+              display: "flex",
+            }}
+          >
+            Dest
+          </Typography>
           <TextField
+            variant="outlined"
+            noOptionsText="No locations"
+            label="Enter location"
             fullWidth
             color="secondary"
-            variant="outlined"
             inputRef={materialRefDest}
           />
-        </div>
+        </Box>
 
-        <Alert severity="error">
-          {errors.DestCity} {errors.DestStreet}  {errors.DestHouseNumber}
-        </Alert>
+        {(errors.DestCity || errors.DestStreet || errors.DestHouseNumber) && (
+          <Alert severity="error">
+            {errors.DestCity} {errors.DestStreet} {errors.DestHouseNumber}
+          </Alert>
+        )}
 
-        <div>
+        <Box>
+          <Typography
+            style={{
+              display: "flex",
+            }}
+          >
+            Date Time picker
+          </Typography>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
-              label="Date Time picker"
               value={selectedDateTime}
               onChange={onChange2}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
-        </div>
-
+        </Box>
+        <Typography style={{ display: "flex" }}>Free Space:</Typography>
         <TextField
           type="number"
           defaultValue="1"
           id="outlined-basic"
-          label="Free space:"
           variant="outlined"
         />
 

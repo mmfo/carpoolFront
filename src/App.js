@@ -34,11 +34,11 @@ function App() {
   return (
     <Provider store={store1}>
       {/* <CacheProvider value={cacheRtl}> */}
-        <ThemeProvider theme={theme}>
-          <div className="App">
-            <Router></Router>
-          </div>
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Router />
+        </div>
+      </ThemeProvider>
       {/* </CacheProvider> */}
     </Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 
 import { useNavigate } from "react-router-dom";
@@ -12,17 +12,11 @@ import Travel from "../../SERVICES/TravelService";
 // } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { debounce } from "@mui/material/utils";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import parse from "autosuggest-highlight/parse";
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
-
 
 export default function TravelSearch() {
   const containerStyle = {
@@ -104,7 +98,7 @@ export default function TravelSearch() {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c",//map
+    googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
   });
 
   const [map, setMap] = useState(null);
@@ -132,7 +126,7 @@ export default function TravelSearch() {
   });
   const { ref: materialRefDest } = usePlacesWidget({
     apiKey: { apikey },
-    //style:{ width: "70%" },
+    // style:{ width: "70%" },
     onPlaceSelected: (place) => {
       handleDestAddressSelect(place);
     },
@@ -143,85 +137,113 @@ export default function TravelSearch() {
   });
   return (
     <>
-      <Typography color="primary" variant="h4">
-        TravelSearch
-      </Typography>
-      <FormControlLabel
-        value="top"
-        control={<Switch color="primary" />}
-        label="נסיעה עכשוית"
-        checked={switchCecked}
-        labelPlacement="top"
-        onChange={() => setSwitchCecked(!switchCecked)}
-      />
+      <Box
+        sx={{
+          padding: "20px",
+        }}
+      >
+        <Typography color="primary" variant="h4">
+          TravelSearch
+        </Typography>
+        <Box style={{ marginTop: "20px" }}>
+          <FormControlLabel
+            value="top"
+            color="primary"
+            control={<Switch color="primary" />}
+            label="Current Travel"
+            checked={switchCecked}
+            labelPlacement="top"
+            onChange={() => setSwitchCecked(!switchCecked)}
+          />
+        </Box>
+      </Box>
 
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "95%" },
-          margin: "0 auto",
+          "& .MuiTextField-root": { m: 1.5, width: "95%" },
+          justifyContent: "space-evenly",
           display: "flex",
-          padding: "60px",
+          justifyContent: "space-between",
+          alignContent: "space-between ",
         }}
       >
         <Box
           style={{
-            "& .MuiTextField-root": { m: 1, width: "95%" },
+            "& .MuiTextField-root": { m: 1 },
             margin: "0 auto",
             width: "400px",
+            flexDirection: "column",
+            width: "30%",
+            display: "flex",
           }}
         >
-          <Grid item xs>
-            {switchCecked ? (
-              <>
-                <div style={{ width: "400px", marginTop: "20px" }}>
-                  <span style={{ color: "pink" }}>Source</span>
-                  <TextField
-                    fullWidth
-                    color="secondary"
-                    variant="outlined"
-                    inputRef={materialRefSource}
-                  />
-                </div>
-                <div style={{ width: "400px", marginTop: "20px" }}>
-                  <span style={{ color: "pink" }}>Dest</span>
-                  <TextField
-                    fullWidth
-                    color="secondary"
-                    variant="outlined"
-                    noOptionsText="No locations"
-                    label="No locations"
-
-                    inputRef={materialRefDest}
-                  />
-                </div>
+          {/* <Grid item xs> */}
+          {switchCecked ? (
+            <Box>
+              <Box>
+                <Typography
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  Source
+                </Typography>
+                <TextField
+                  fullWidth
+                  color="secondary"
+                  variant="outlined"
+                  noOptionsText="No locations"
+                  label="Enter location"
+                  inputRef={materialRefSource}
+                />
+              </Box>
+              <Box>
+                <Typography
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  Dest
+                </Typography>
+                <TextField
+                  fullWidth
+                  color="secondary"
+                  variant="outlined"
+                  noOptionsText="No locations"
+                  label="Enter a location"
+                  inputRef={materialRefDest}
+                />
+              </Box>
+              <Box>
+                <Typography style={{ display: "flex" }}>Free Space:</Typography>
                 <TextField
                   type="number"
                   defaultValue="1"
                   id="outlined-basic"
-                  label="Free space:"
                   variant="outlined"
                 />
-              </>
-            ) : (
-                <>
-                  <FormControlLabel
-                    control={<Checkbox defaultChecked />}
-                    label="נסיעה קבועה"
-                  />
-                </>
-              )}
-          </Grid>
+              </Box>
+            </Box>
+          ) : (
+            <Box>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="Regular travel"
+                // label="נסיעה קבועה"
+              />
+            </Box>
+          )}
+          {/* </Grid> */}
 
-          <div
+          <Box
             style={{
               display: "flex",
               justifyContent: "space-evenly",
-              marginBottom: "20px",
-              marginTop: "20px",
+              marginTop: "25px",
             }}
           >
-            <Button variant="outlined" onClick={onSubmit}>
+            <Button color="secondary" variant="contained" onClick={onSubmit}>
               Search
             </Button>
             <Button
@@ -232,30 +254,40 @@ export default function TravelSearch() {
             >
               Cancel
             </Button>
-          </div>
+          </Box>
         </Box>
-        {foundTravelList.length > 0 &&
-          foundTravelList.map((item) => {
-            return (
-              <>
-                <CardTravel data={item} />
-              </>
-            );
-          })}
-        {isLoaded ? (
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-          >
-            <Marker position={center} />
-            <></>
-          </GoogleMap>
-        ) : (
-            <>gkjfdkldkl</>
+
+        <Box
+          style={{
+            display: "flex",
+            width: "30%",
+            justifyContent: "center",
+            marginRight: "10px",
+          }}
+        >
+          {foundTravelList.length > 0 &&
+            foundTravelList.map((item) => {
+              return (
+                <Box>
+                  <CardTravel data={item} />
+                </Box>
+              );
+            })}
+        </Box>
+        <Box style={{ display: "flex", width: "30%" }}>
+          {isLoaded && (
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={10}
+              onLoad={onLoad}
+              onUnmount={onUnmount}
+            >
+              <Marker position={center} />
+              {/* <></> */}
+            </GoogleMap>
           )}
+        </Box>
       </Box>
     </>
   );
