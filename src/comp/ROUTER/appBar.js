@@ -1,19 +1,15 @@
-import React from 'react';
+import React from "react";
 // import { makeStyles } from '@mui/styles';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import {styled} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link, useNavigate } from 'react-router-dom'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Menu, Container, Box, MenuItem, Tooltip, Avatar } from '@mui/material';
-
-
-
-
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Link, useNavigate } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Menu, Container, Box, MenuItem, Tooltip, Avatar } from "@mui/material";
 // const useStyles = makeStyles((theme) => ({
 //   root: {
 //     flexGrow: 1,
@@ -26,67 +22,68 @@ import { Menu, Container, Box, MenuItem, Tooltip, Avatar } from '@mui/material';
 //   },
 // }));
 const SpanDesign = styled("span")({
-  fontsize:"1.5rem",
-  marginRight:"10px",
-  textDecoration:"none",
-  color:"white",
-  paddingLeft:"5px",
-  alignSelf:"center",
-  display:"inline-block",
-})
+  fontsize: "1.5rem",
+  marginRight: "10px",
+  textDecoration: "none",
+  color: "white",
+  paddingLeft: "5px",
+  alignSelf: "center",
+  display: "inline-block",
+});
 export default function ButtonAppBar() {
- 
-  const pages = [{title:'login',path:"/login"}, {title:'signup',path:"/signup"}, {title:'profile',path:"/profile"},{title:'home',path:"/"}];
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+  const pages = [
+    { title: "login", path: "/login" },
+    { title: "signup", path: "/signup" },
+    { title: "profile", path: "/profile" },
+    { title: "home", path: "/" },
+  ];
+  const settings = ["Profile", "Account", "Dashboard", "Logout"];
   // const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const menuId = 'primary-search-account-menu';
   const handleOpenNavMenu = (event) => {
-    debugger
+    debugger;
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
-    
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = (page) => {
-    
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    
     setAnchorElUser(null);
   };
   return (
-    <div  >
+    <div>
       <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              LOGO
+            </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            {/* <IconButton
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              {/* <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -96,7 +93,7 @@ export default function ButtonAppBar() {
             >
               <MenuIcon />
             </IconButton> */}
-            {/* <Menu
+              {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -121,78 +118,75 @@ export default function ButtonAppBar() {
               ))}
             </Menu>
           </Box> */}
-          </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(({title,path}) => (
-              // <Button
-              //   key={page}
-              //   onClick={handleCloseNavMenu}
-              //   sx={{ my: 2, color: 'white', display: 'block' }}
-              // >
-              //   {page}
-              // </Button>
-              <Link key={path} to={path}>
-                <SpanDesign>
-                <div>
-                  {title}
-                </div>
-                </SpanDesign>
-              </Link>
-
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+            </Box>
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+              LOGO
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {pages.map(({ title, path }) => (
+                // <Button
+                //   key={page}
+                //   onClick={handleCloseNavMenu}
+                //   sx={{ my: 2, color: 'white', display: 'block' }}
+                // >
+                //   {page}
+                // </Button>
+                <Link key={path} to={path}>
+                  <SpanDesign>
+                    <div>{title}</div>
+                  </SpanDesign>
+                </Link>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </div>
   );
 }

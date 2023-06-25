@@ -42,7 +42,7 @@ const Travel = {
             return data
         }
     },
-    
+
     TravelSearch: async (travel) => {
         let result = await fetch(`${httpTravel}/searchTravel`, {
             method: 'POST',
@@ -51,11 +51,29 @@ const Travel = {
             },
             body: JSON.stringify(travel)
         })
-        if(result.ok)
-        {
-var data= await result.json()
+        if (result.ok) {
+            var data = await result.json()
             return data
         }
+    },
+    NevigateRoute: async () => {
+        try{
+            let result = await fetch(`${httpTravel}/nevigate`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            if (result.ok) {
+                var data = await result.json()
+                return data
+            }
+        }catch(e)
+        {
+            console.error("error in"+e)
+        
+        }
+        
     }
 }
 export default Travel;

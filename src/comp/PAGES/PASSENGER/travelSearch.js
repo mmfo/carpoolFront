@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
-
 import { useNavigate } from "react-router-dom";
 import CardTravel from "./cardTravel";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, Marker,  DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Travel from "../../SERVICES/TravelService";
-// import {
-//   Autocomplete as MuiAutocomplete,
-//   TextField,
-//   Button,
-// } from "@mui/material";
+import ShowMap from './googleMap'
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -17,6 +12,10 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
+import { Loader } from '@googlemaps/js-api-loader';
+import GMap from './googleMap';
+
+const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
 
 export default function TravelSearch() {
   const containerStyle = {
@@ -27,16 +26,15 @@ export default function TravelSearch() {
     lat: -3.745,
     lng: -38.523,
   };
-  const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
 
   const navigate = useNavigate();
-  const [searchTravel, setSearchTravel] = useState({
+  const [searchTravel, setSearchTravel] = useState({//{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "",
 
-    DestCity: "",
-    DestStreet: "",
+    DestCity: "בני ברק",
+    DestStreet: "דונולו",
     DestHouseNumber: "",
 
     TimeTravel: new Date(),
@@ -45,11 +43,26 @@ export default function TravelSearch() {
 
   const [foundTravelList, setFoundTravelList] = useState([]);
   const [switchCecked, setSwitchCecked] = useState(true);
+  const [directions, setDirections] = useState(null);
 
   const onChange = (selected, key) => {
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
-
+  const [loadMap, setLoadMap] = useState(false);
+ 
+  useEffect(() => {
+    const options = {
+      apiKey: {apikey},
+      version: "weekly",
+      libraries: ['geometry']
+    };
+ 
+    new Loader(options).load().then(() => {
+      setLoadMap(true);
+    }).catch(e => {
+      console.error('Sorry, something went wrong: Please try again later. Error:', e);
+    });
+  }, []);
   const handleSourceAddressSelect = (place) => {
     const addressComponents = place.address_components;
     addressComponents.forEach((component) => {
@@ -95,23 +108,18 @@ export default function TravelSearch() {
     setFoundTravelList(res);
     console.log(foundTravelList);
   };
+  // const onclickmap = async () => {
+  //   var res = await Travel.NevigateRoute();
+  //   console.log(res);
+  //   setRoute(res)
+  // };
+
+
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
+   // googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
   });
-
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
 
   const { ref: materialRefSource } = usePlacesWidget({
     apiKey: { apikey },
@@ -290,18 +298,8 @@ export default function TravelSearch() {
               );
             })}
         </Box>
-        <Box style={{ display: "flex", width: "30%" }}>
-          {isLoaded && (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              zoom={10}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
-            >
-              <Marker position={center} />
-            </GoogleMap>
-          )}
+        <Box style={{ display: "flex", width: "30%" }}>       
+          {!loadMap ? <div>Loading...</div> : <GMap searchTravel={searchTravel}/>}         
         </Box>
       </Box>
     </>

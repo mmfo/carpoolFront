@@ -22,6 +22,7 @@ const Users = {
             },
             body: JSON.stringify(user)
         })
+        
         return result.data;
     },
     isEmailExist: async (UserEmail) => {
