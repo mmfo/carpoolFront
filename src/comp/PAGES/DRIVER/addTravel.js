@@ -57,32 +57,32 @@ export default function AddTravel() {
       case "SourceCity":
         if (!value)
           //||value.trim() === "")
-          return "❗SourceCity ";
+          return "SourceCity ";
         else return "";
       case "SourceStreet":
         if (!value)
           // || value.trim() === "")
-          return "❗  SourceStreet";
+          return " SourceStreet";
         else return "";
       case "SourceHouseNumber":
         if (!value)
           // || value.trim() === "")
-          return "❗SourceHouseNumber ";
+          return "SourceHouseNumber ";
         else return "";
       case "DestCity":
         if (!value)
           // || value.trim() === "")
-          return "❗DestCity ";
+          return "DestCity ";
         else return "";
       case "DestStreet":
         if (!value)
           // || value.trim() === "")
-          return "❗ DestStreet  ";
+          return " DestStreet  ";
         else return "";
       case "DestHouseNumber":
         if (!value)
           // || value.trim() === "")
-          return "❗ DestHouseNumber";
+          return "DestHouseNumber";
         else return "";
       default: {
         return "";
@@ -243,8 +243,9 @@ export default function AddTravel() {
           padding: "20px",
         }}
       >
-        <Box style={{ width: "400px" }}>
+        <Box>
           <Typography
+            color="primary"
             style={{
               display: "flex",
             }}
@@ -269,10 +270,10 @@ export default function AddTravel() {
           </Alert>
         )}
 
-        <Box style={{ width: "400px" }}>
+        <Box>
           <Typography
+            color="primary"
             style={{
-              //  color: "pink" ,
               display: "flex",
             }}
           >
@@ -296,6 +297,7 @@ export default function AddTravel() {
 
         <Box>
           <Typography
+            color="primary"
             style={{
               display: "flex",
             }}
@@ -310,7 +312,9 @@ export default function AddTravel() {
             />
           </LocalizationProvider>
         </Box>
-        <Typography style={{ display: "flex" }}>Free Space:</Typography>
+        <Typography color="primary" style={{ display: "flex" }}>
+          Free Space:
+        </Typography>
         <TextField
           type="number"
           defaultValue="1"

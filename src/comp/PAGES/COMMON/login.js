@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "@mui/material/Alert";
 
-
 function Copyright(props) {
   return (
     <Typography
@@ -26,9 +25,9 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="#">
         Your Website
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -55,25 +54,25 @@ export default function Login() {
     switch (name) {
       case "UserName":
         if (!value || value.trim() === "") {
-          return "❗שם פרטי הוא שדה חובה ";
+          return "First Name";
         } else {
           return "";
         }
       case "UserEmail":
         if (!value) {
-          return "❗מייל הוא שדה חובה ";
+          return "Email";
         } else if (
           !value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
         ) {
-          return "הזן כתובת מייל חוקית";
+          return "Enter a valid email address";
         } else {
           return "";
         }
       case "UserPassword":
         if (!value) {
-          return "❗סיסמא היא שדה חובה ";
+          return "Password";
         } else if (value.length < 8 || value.length > 15) {
-          return "הזן בבקשה שמונה תווים בלבד";
+          return "Please enter 8 characters only";
         } else {
           return "";
         }
@@ -125,89 +124,110 @@ export default function Login() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 1.5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            // backgroundColor: "red",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography color="primary" component="h1" variant="h5">
             Log in
           </Typography>
-          <Box noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => {
-                onChange(e.target.value, "UserEmail");
-              }}
-            />
 
-            {errors.UserEmail && (
-              <Alert severity="error">{errors.UserEmail} </Alert>
-            )}
-            {/* <span style={{ color: "red" }} className="text-danger">
-              {errors.UserEmail}
-            </span> */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => {
-                onChange(e.target.value, "UserPassword");
-              }}
-            />
-            {errors.UserPassword && (
-              <Alert severity="error">{errors.UserPassword} </Alert>
-            )}
-            {/* <span style={{ color: "red" }} className="text-danger">
-              {errors.UserPassword}
-            </span> */}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
-            >
-              Log In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  href="#"
-                  variant="body2"
-                  onClick={() => navigate("/signup")}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1.5, width: "95%" },
+              margin: "0 auto",
+              maxWidth: "400px",
+              textAlign: "center",
+              //  padding: "10px",
+            }}
+          >
+            <Box style={{ width: "400px" }} container spacing={2}>
+              <Box item xs={12}>
+                <TextField
+                  // margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  // name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(e) => {
+                    onChange(e.target.value, "UserEmail");
+                  }}
+                />
+
+                {errors.UserEmail && (
+                  <Alert severity="error">{errors.UserEmail} </Alert>
+                )}
+              </Box>
+              <Box item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(e) => {
+                    onChange(e.target.value, "UserPassword");
+                  }}
+                />
+                {errors.UserPassword && (
+                  <Alert severity="error">{errors.UserPassword} </Alert>
+                )}
+              </Box>
+              <Box
+                item
+                xs={12}
+                style={{
+                  margin: "5px",
+                }}
+              >
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              </Box>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 1.5,
+                  mb: 2,
+                }}
+                onClick={handleSubmit}
+              >
+                Log In
+              </Button>
+              <Box style={{ display: "flex", justifyContent: "space-around" }}>
+                <Box>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Box>
+                <Box>
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={() => navigate("/signup")}
+                  >
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Box>
+
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

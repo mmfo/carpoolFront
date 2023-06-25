@@ -150,7 +150,11 @@ export default function TravelSearch() {
             value="top"
             color="primary"
             control={<Switch color="primary" />}
-            label="Current Travel"
+            label={
+              <Typography color="primary" variant="h6">
+                Current Travel
+              </Typography>
+            }
             checked={switchCecked}
             labelPlacement="top"
             onChange={() => setSwitchCecked(!switchCecked)}
@@ -172,7 +176,7 @@ export default function TravelSearch() {
           style={{
             "& .MuiTextField-root": { m: 1 },
             margin: "0 auto",
-            width: "400px",
+            // width: "400px",
             flexDirection: "column",
             width: "30%",
             display: "flex",
@@ -183,6 +187,7 @@ export default function TravelSearch() {
             <Box>
               <Box>
                 <Typography
+                  color="primary"
                   style={{
                     display: "flex",
                   }}
@@ -200,6 +205,7 @@ export default function TravelSearch() {
               </Box>
               <Box>
                 <Typography
+                  color="primary"
                   style={{
                     display: "flex",
                   }}
@@ -216,7 +222,9 @@ export default function TravelSearch() {
                 />
               </Box>
               <Box>
-                <Typography style={{ display: "flex" }}>Free Space:</Typography>
+                <Typography color="primary" style={{ display: "flex" }}>
+                  Free Space:
+                </Typography>
                 <TextField
                   type="number"
                   defaultValue="1"
@@ -226,11 +234,19 @@ export default function TravelSearch() {
               </Box>
             </Box>
           ) : (
-            <Box>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <FormControlLabel
                 control={<Checkbox defaultChecked />}
-                label="Regular travel"
-                // label="נסיעה קבועה"
+                label={
+                  <Typography color="primary" variant="h6">
+                    Regular travel
+                  </Typography>
+                }
               />
             </Box>
           )}
@@ -240,7 +256,7 @@ export default function TravelSearch() {
             style={{
               display: "flex",
               justifyContent: "space-evenly",
-              marginTop: "25px",
+              marginTop: "20px",
             }}
           >
             <Button color="secondary" variant="contained" onClick={onSubmit}>
@@ -260,7 +276,7 @@ export default function TravelSearch() {
         <Box
           style={{
             display: "flex",
-            width: "30%",
+            // width: "30%",
             justifyContent: "center",
             marginRight: "10px",
           }}
@@ -284,7 +300,6 @@ export default function TravelSearch() {
               onUnmount={onUnmount}
             >
               <Marker position={center} />
-              {/* <></> */}
             </GoogleMap>
           )}
         </Box>
