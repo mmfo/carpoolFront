@@ -2,18 +2,24 @@ import React, { useState, useEffect, useCallback } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 import { useNavigate } from "react-router-dom";
 import CardTravel from "./cardTravel";
-import { GoogleMap, useJsApiLoader, Marker,  DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 import Travel from "../../SERVICES/TravelService";
-import ShowMap from './googleMap'
+import ShowMap from "./googleMap";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import { Switch, CircularProgress, Alert } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { Loader } from '@googlemaps/js-api-loader';
-import GMap from './googleMap';
+import { Loader } from "@googlemaps/js-api-loader";
+import GMap from "./googleMap";
 
 const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
 
@@ -28,7 +34,8 @@ export default function TravelSearch() {
   };
 
   const navigate = useNavigate();
-  const [searchTravel, setSearchTravel] = useState({//{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
+  const [searchTravel, setSearchTravel] = useState({
+    //{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "",
@@ -41,7 +48,59 @@ export default function TravelSearch() {
     freeSpace: 1,
   });
 
-  const [foundTravelList, setFoundTravelList] = useState([]);
+  const [foundTravelList, setFoundTravelList] = useState([{
+    destCity:  "Tel Aviv-Yafo",
+  destHouseNumber  :  "",
+  destStreet  :  "Allenby Street",
+  freeSpace
+  :
+  1,
+  sourceCity  :
+  "Bnei Brak",
+  sourceHouseNumber
+  :
+  "",
+  sourceStreet
+  :
+  "Donnolo Street",
+  timeTravel
+  :
+  "2023-06-07T18:15:23.824Z",
+  userEmail
+  :
+  "m0583267055@gmail.com",
+  userName
+  :
+  "ג",
+  userPhone
+  :
+  null
+},{   destCity:  "Tel Aviv-Yafo",
+destHouseNumber  :  "",
+destStreet  :  "Allenby Street",
+freeSpace
+:
+1,
+sourceCity  :
+"Bnei Brak",
+sourceHouseNumber
+:
+"",
+sourceStreet
+:
+"Donnolo Street",
+timeTravel
+:
+"2023-06-07T18:15:23.824Z",
+userEmail
+:
+"m0583267055@gmail.com",
+userName
+:
+"ג",
+userPhone
+:
+null}]);
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
 
@@ -49,19 +108,27 @@ export default function TravelSearch() {
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
   const [loadMap, setLoadMap] = useState(false);
- 
+  const [loadResultSearch, setResultSearch] = useState(false);
+  const [emptyFoundTravelList, setEmptyFoundTravelList] = useState(false);
+
   useEffect(() => {
     const options = {
-      apiKey: {apikey},
+      apiKey: { apikey },
       version: "weekly",
-      libraries: ['geometry']
+      libraries: ["geometry"],
     };
- 
-    new Loader(options).load().then(() => {
-      setLoadMap(true);
-    }).catch(e => {
-      console.error('Sorry, something went wrong: Please try again later. Error:', e);
-    });
+
+    new Loader(options)
+      .load()
+      .then(() => {
+        setLoadMap(true);
+      })
+      .catch((e) => {
+        console.error(
+          "Sorry, something went wrong: Please try again later. Error:",
+          e
+        );
+      });
   }, []);
   const handleSourceAddressSelect = (place) => {
     const addressComponents = place.address_components;
@@ -103,10 +170,15 @@ export default function TravelSearch() {
   };
 
   const onSubmit = async () => {
+    setResultSearch(true)
     var res = await Travel.TravelSearch(searchTravel);
     console.log(res);
     setFoundTravelList(res);
-    console.log(foundTravelList);
+    console.log("foundTravelList", foundTravelList);
+    if (foundTravelList.length == 0) {
+      setEmptyFoundTravelList(true)
+    }
+    setResultSearch(false)
   };
   // const onclickmap = async () => {
   //   var res = await Travel.NevigateRoute();
@@ -114,11 +186,9 @@ export default function TravelSearch() {
   //   setRoute(res)
   // };
 
-
-
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-   // googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
+    // googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
   });
 
   const { ref: materialRefSource } = usePlacesWidget({
@@ -242,22 +312,22 @@ export default function TravelSearch() {
               </Box>
             </Box>
           ) : (
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label={
-                  <Typography color="primary" variant="h6">
-                    Regular travel
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  label={
+                    <Typography color="primary" variant="h6">
+                      Regular travel
                   </Typography>
-                }
-              />
-            </Box>
-          )}
+                  }
+                />
+              </Box>
+            )}
           {/* </Grid> */}
 
           <Box
@@ -289,17 +359,34 @@ export default function TravelSearch() {
             marginRight: "10px",
           }}
         >
-          {foundTravelList.length > 0 &&
-            foundTravelList.map((item) => {
-              return (
-                <Box>
-                  <CardTravel data={item} />
-                </Box>
-              );
-            })}
+
+          {loadResultSearch ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+              <p>
+                {/* {emptyFoundTravelList&& <Alert>not found</Alert>} */}
+                {foundTravelList.length > 0 &&
+                  foundTravelList.map((item) => {
+                    return (
+                      <Box>
+                        <CardTravel data={item} />
+                      </Box>
+                    );
+                  })}
+              </p>
+            )}
+
         </Box>
-        <Box style={{ display: "flex", width: "30%" }}>       
-          {!loadMap ? <div>Loading...</div> : <GMap searchTravel={searchTravel}/>}         
+        <Box style={{ display: "flex", width: "30%" }}>
+          {!loadMap ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+              <GMap searchTravel={searchTravel} />
+            )}
         </Box>
       </Box>
     </>

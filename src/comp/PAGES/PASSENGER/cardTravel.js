@@ -36,7 +36,7 @@ const CardTravel = ({ data }) => {
   };
   return (
     <Grid item xs={4} onClick={() => navigate()}>
-      <Card sx={{ "& .MuiCard-root": { mb: 1.5 }, minWidth: 275 }}>
+      <Card sx={{ "& .MuiCard-root": { mb: 1.5 }, minWidth: 275,backgroundColor:'red' }}>
         <CardContent
           sx={{
             "& .MuiCardContent-root": { mb: 1.5 },
@@ -48,6 +48,9 @@ const CardTravel = ({ data }) => {
             Source City :{data.sourceCity},{data.sourceStreet},
             {data.sourceHouseNumber}
           </Typography>
+          {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            id:{data.id},
+          </Typography> */}
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             Dest City :{data.destCity},{data.destStreet},{data.destHouseNumber}
           </Typography>
