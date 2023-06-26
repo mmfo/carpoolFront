@@ -27,9 +27,11 @@ export default function Profile() {
         padding: "10px",
       }}
     >
-      <Typography color="primary" variant="h5">
-        Profile
-      </Typography>
+      <Box style={{ marginTop: "30px" }}>
+        <Typography color="primary" variant="h4">
+          Profile
+        </Typography>
+      </Box>
       <Box
         style={{
           margin: "10px",
@@ -83,7 +85,7 @@ export default function Profile() {
             marginTop: "20px",
           }}
         >
-          <Button color="secondary" variant="contained" onClick={() => {}}>
+          <Button variant="contained" onClick={() => {}}>
             Save Changes
           </Button>
           <Button

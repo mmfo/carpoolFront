@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -9,13 +9,19 @@ export default function Home() {
       component="form"
       sx={{
         "& .MuiTextField-root": { m: 1, width: "95%" },
-        margin: "0 auto",
+        margin: "0 auto ",
         maxWidth: "400px",
         textAlign: "center",
       }}
     >
-      <h1>Home</h1>
-      <h2>driver</h2>
+      <Box style={{ marginTop: "50px", marginBottom: "15px" }}>
+        <Typography color="primary" variant="h4">
+          Home
+        </Typography>
+      </Box>
+      <Typography color="primary" variant="h5">
+        driver
+      </Typography>
       <div
         style={{
           display: "flex",
@@ -39,7 +45,9 @@ export default function Home() {
           driverTravel
         </Button>
       </div>
-      <h2>passenger</h2>
+      <Typography color="primary" variant="h5">
+      passenger
+      </Typography>
       <div
         style={{
           display: "flex",
@@ -48,20 +56,20 @@ export default function Home() {
           marginTop: "20px",
         }}
       >
-      <Button
-        variant="outlined"
-        // color="primary"
-        onClick={() => navigate("/passengerTravel")}
-      >
-        passengerTravel
-      </Button>
-      <Button
-        variant="outlined"
-        // color="primary"
-        onClick={() => navigate("/travelSearch")}
-      >
-        travelSearch
-      </Button>
+        <Button
+          variant="outlined"
+          // color="primary"
+          onClick={() => navigate("/passengerTravel")}
+        >
+          passengerTravel
+        </Button>
+        <Button
+          variant="outlined"
+          // color="primary"
+          onClick={() => navigate("/travelSearch")}
+        >
+          travelSearch
+        </Button>
       </div>
     </Box>
   );

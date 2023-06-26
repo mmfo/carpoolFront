@@ -106,7 +106,7 @@ export default function SignUp() {
     }
 
     //   var res1 = await Users.isEmailExist(userObj.UserEmail)
-    //  if (res.ok)//if the email exist 
+    //  if (res.ok)//if the email exist
     // {
     //   alert(' email already in the bd , go to log in ')
     //   navigate('/login')
@@ -118,16 +118,17 @@ export default function SignUp() {
         UserPassword: userObj.UserPassword,
       };
       console.log("----data----", data);
-      var res = await Users.createUser(userObj)
+      var res = await Users.createUser(userObj);
       window.alert("נשלח בהצלחה!", JSON.stringify(data));
-      if (res !== null)//??
-        navigate('/')
+      if (res !== null)
+        //??
+        navigate("/");
     }
-  }
+  };
   const onChange = (selected, key) => {
-    setErrors({ ...errors, [key]: validate(key, selected) })
-    setUserObj((prev) => ({ ...prev, [key]: selected }))
-  }
+    setErrors({ ...errors, [key]: validate(key, selected) });
+    setUserObj((prev) => ({ ...prev, [key]: selected }));
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -140,10 +141,11 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#09195c" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography color="primary" component="h1" variant="h5">
+
+          <Typography color="#09195c" component="h1" variant="h5">
             Sign up
           </Typography>
 

@@ -36,7 +36,13 @@ const CardTravel = ({ data }) => {
   };
   return (
     <Grid item xs={4} onClick={() => navigate()}>
-      <Card sx={{ "& .MuiCard-root": { mb: 1.5 }, minWidth: 275,backgroundColor:'red' }}>
+      <Card
+        sx={{
+          "& .MuiCard-root": { mb: 1.5 },
+          minWidth: 275,
+          textAlign: "start",
+        }}
+      >
         <CardContent
           sx={{
             "& .MuiCardContent-root": { mb: 1.5 },
@@ -44,26 +50,40 @@ const CardTravel = ({ data }) => {
             flexDirection: "column",
           }}
         >
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Source City :{data.sourceCity},{data.sourceStreet},
-            {data.sourceHouseNumber}
+          <Typography sx={{ mb: 1.5 }} color="primary">
+            <Box fontWeight="bold" display="inline">
+              Source City :
+            </Box>
+            {data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
           </Typography>
-          {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
+
+          {/* <Typography sx={{ mb: 1.5 }} color="primary">
             id:{data.id},
           </Typography> */}
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Dest City :{data.destCity},{data.destStreet},{data.destHouseNumber}
+          <Typography sx={{ mb: 1.5 }} color="primary">
+            <Box fontWeight="bold" display="inline">
+              Dest City :
+            </Box>
+            {data.destCity}, {data.destStreet},{data.destHouseNumber}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          <Typography sx={{ mb: 1.5 }} color="primary">
             {/* יהיה זמין בעוד חמש דקות */}
-            Availability within five minutes :{data.timeTravel}
+            <Box fontWeight="bold" display="inline">
+              Availability within five minutes :
+            </Box>
+            {data.timeTravel}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Free Space:
+          <Typography sx={{ mb: 1.5 }} color="primary">
+            <Box fontWeight="bold" display="inline">
+              Free Space:
+            </Box>
             {data.freeSpace ? data.freeSpace : 1}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Detail Driver :{data.userName},{data.userEmail},{data.userPhone}
+          <Typography sx={{ mb: 1.5 }} color="primary">
+            <Box fontWeight="bold" display="inline">
+              Detail Driver :
+            </Box>
+            {data.userName}, {data.userEmail}, {data.userPhone}
           </Typography>
         </CardContent>
         <CardActions>

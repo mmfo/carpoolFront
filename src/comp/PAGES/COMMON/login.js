@@ -128,13 +128,12 @@ export default function Login() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // backgroundColor: "red",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#09195c" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography color="primary" component="h1" variant="h5">
+          <Typography color="#09195c" component="h1" variant="h5">
             Log in
           </Typography>
 
@@ -197,17 +196,11 @@ export default function Login() {
                   label="Remember me"
                 />
               </Box>
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 1.5,
-                  mb: 2,
-                }}
-                onClick={handleSubmit}
-              >
-                Log In
-              </Button>
+              <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
+                <Button fullWidth variant="contained" onClick={handleSubmit}>
+                  Log In
+                </Button>
+              </Box>
               <Box style={{ display: "flex", justifyContent: "space-around" }}>
                 <Box>
                   <Link href="#" variant="body2">

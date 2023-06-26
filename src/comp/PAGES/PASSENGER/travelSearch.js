@@ -48,59 +48,34 @@ export default function TravelSearch() {
     freeSpace: 1,
   });
 
-  const [foundTravelList, setFoundTravelList] = useState([{
-    destCity:  "Tel Aviv-Yafo",
-  destHouseNumber  :  "",
-  destStreet  :  "Allenby Street",
-  freeSpace
-  :
-  1,
-  sourceCity  :
-  "Bnei Brak",
-  sourceHouseNumber
-  :
-  "",
-  sourceStreet
-  :
-  "Donnolo Street",
-  timeTravel
-  :
-  "2023-06-07T18:15:23.824Z",
-  userEmail
-  :
-  "m0583267055@gmail.com",
-  userName
-  :
-  "ג",
-  userPhone
-  :
-  null
-},{   destCity:  "Tel Aviv-Yafo",
-destHouseNumber  :  "",
-destStreet  :  "Allenby Street",
-freeSpace
-:
-1,
-sourceCity  :
-"Bnei Brak",
-sourceHouseNumber
-:
-"",
-sourceStreet
-:
-"Donnolo Street",
-timeTravel
-:
-"2023-06-07T18:15:23.824Z",
-userEmail
-:
-"m0583267055@gmail.com",
-userName
-:
-"ג",
-userPhone
-:
-null}]);
+  const [foundTravelList, setFoundTravelList] = useState([
+    {
+      destCity: "Tel Aviv-Yafo",
+      destHouseNumber: "",
+      destStreet: "Allenby Street",
+      freeSpace: 1,
+      sourceCity: "Bnei Brak",
+      sourceHouseNumber: "",
+      sourceStreet: "Donnolo Street",
+      timeTravel: "2023-06-07T18:15:23.824Z",
+      userEmail: "m0583267055@gmail.com",
+      userName: "ג",
+      userPhone: null,
+    },
+    {
+      destCity: "Tel Aviv-Yafo",
+      destHouseNumber: "",
+      destStreet: "Allenby Street",
+      freeSpace: 1,
+      sourceCity: "Bnei Brak",
+      sourceHouseNumber: "",
+      sourceStreet: "Donnolo Street",
+      timeTravel: "2023-06-07T18:15:23.824Z",
+      userEmail: "m0583267055@gmail.com",
+      userName: "ג",
+      userPhone: null,
+    },
+  ]);
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
 
@@ -170,15 +145,15 @@ null}]);
   };
 
   const onSubmit = async () => {
-    setResultSearch(true)
+    setResultSearch(true);
     var res = await Travel.TravelSearch(searchTravel);
     console.log(res);
     setFoundTravelList(res);
     console.log("foundTravelList", foundTravelList);
     if (foundTravelList.length == 0) {
-      setEmptyFoundTravelList(true)
+      setEmptyFoundTravelList(true);
     }
-    setResultSearch(false)
+    setResultSearch(false);
   };
   // const onclickmap = async () => {
   //   var res = await Travel.NevigateRoute();
@@ -274,10 +249,8 @@ null}]);
                 </Typography>
                 <TextField
                   fullWidth
-                  color="secondary"
                   variant="outlined"
                   noOptionsText="No locations"
-                  label="Enter location"
                   inputRef={materialRefSource}
                 />
               </Box>
@@ -292,10 +265,8 @@ null}]);
                 </Typography>
                 <TextField
                   fullWidth
-                  color="secondary"
                   variant="outlined"
                   noOptionsText="No locations"
-                  label="Enter a location"
                   inputRef={materialRefDest}
                 />
               </Box>
@@ -312,22 +283,22 @@ null}]);
               </Box>
             </Box>
           ) : (
-              <Box
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label={
-                    <Typography color="primary" variant="h6">
-                      Regular travel
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label={
+                  <Typography color="primary" variant="h6">
+                    Regular travel
                   </Typography>
-                  }
-                />
-              </Box>
-            )}
+                }
+              />
+            </Box>
+          )}
           {/* </Grid> */}
 
           <Box
@@ -337,7 +308,7 @@ null}]);
               marginTop: "20px",
             }}
           >
-            <Button color="secondary" variant="contained" onClick={onSubmit}>
+            <Button variant="contained" onClick={onSubmit}>
               Search
             </Button>
             <Button
@@ -359,25 +330,23 @@ null}]);
             marginRight: "10px",
           }}
         >
-
           {loadResultSearch ? (
-            <Box sx={{ display: "flex" }}>
+            <Box style={{ margin: "220px", display: "flex" }}>
               <CircularProgress />
             </Box>
           ) : (
-              <p>
-                {/* {emptyFoundTravelList&& <Alert>not found</Alert>} */}
-                {foundTravelList.length > 0 &&
-                  foundTravelList.map((item) => {
-                    return (
-                      <Box>
-                        <CardTravel data={item} />
-                      </Box>
-                    );
-                  })}
-              </p>
-            )}
-
+            <p>
+              {/* {emptyFoundTravelList&& <Alert>not found</Alert>} */}
+              {foundTravelList.length > 0 &&
+                foundTravelList.map((item) => {
+                  return (
+                    <Box style={{ margin: "20px" }}>
+                      <CardTravel data={item} />
+                    </Box>
+                  );
+                })}
+            </p>
+          )}
         </Box>
         <Box style={{ display: "flex", width: "30%" }}>
           {!loadMap ? (
@@ -385,8 +354,8 @@ null}]);
               <CircularProgress />
             </Box>
           ) : (
-              <GMap searchTravel={searchTravel} />
-            )}
+            <GMap searchTravel={searchTravel} />
+          )}
         </Box>
       </Box>
     </>

@@ -254,10 +254,8 @@ export default function AddTravel() {
           </Typography>
           <TextField
             fullWidth
-            color="secondary"
             variant="outlined"
             inputRef={materialRefSource}
-            label="Enter location"
             noOptionsText="No locations"
           />
         </Box>
@@ -282,9 +280,7 @@ export default function AddTravel() {
           <TextField
             variant="outlined"
             noOptionsText="No locations"
-            label="Enter location"
             fullWidth
-            color="secondary"
             inputRef={materialRefDest}
           />
         </Box>
@@ -331,7 +327,6 @@ export default function AddTravel() {
         >
           <Button
             variant="contained"
-            color="secondary"
             onClick={() => createTravel()}
           >
             add
