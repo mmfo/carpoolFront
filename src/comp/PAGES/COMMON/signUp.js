@@ -1,4 +1,4 @@
-import * as React from "react";
+import React , {useState} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -38,13 +38,13 @@ const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [userObj, setUserObj] = React.useState({
+  const [userObj, setUserObj] = useState({
     UserName: "",
     UserEmail: "",
     UserPassword: "",
     UserPhone: "",
   });
-  const [errors, setErrors] = React.useState({
+  const [errors, setErrors] = useState({
     UserName: "",
     UserEmail: "",
     UserPassword: "",

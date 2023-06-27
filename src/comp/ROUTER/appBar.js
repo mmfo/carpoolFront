@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // import { makeStyles } from '@mui/styles';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material";
+import { Divider, styled } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -39,8 +39,8 @@ export default function ButtonAppBar() {
   ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   // const classes = useStyles();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
   // const menuId = 'primary-search-account-menu';
   const handleOpenNavMenu = (event) => {
@@ -155,7 +155,11 @@ export default function ButtonAppBar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+              }}
+            >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -179,7 +183,12 @@ export default function ButtonAppBar() {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography
+                      sx={{ width: "150px", padding: "5px" }}
+                      textAlign="center"
+                    >
+                      {setting} <Divider variant="middle" />
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>

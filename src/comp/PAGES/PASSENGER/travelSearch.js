@@ -335,7 +335,7 @@ export default function TravelSearch() {
               <CircularProgress />
             </Box>
           ) : (
-            <p>
+            <Box>
               {/* {emptyFoundTravelList&& <Alert>not found</Alert>} */}
               {foundTravelList.length > 0 &&
                 foundTravelList.map((item) => {
@@ -345,7 +345,7 @@ export default function TravelSearch() {
                     </Box>
                   );
                 })}
-            </p>
+            </Box>
           )}
         </Box>
         <Box style={{ display: "flex", width: "30%" }}>

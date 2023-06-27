@@ -48,7 +48,7 @@ export default function AddTravel() {
     TimeTravel: new Date(), // new Date(),
     UserId: dataState.id,
   });
-
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
 
@@ -127,7 +127,12 @@ export default function AddTravel() {
         },
         body: JSON.stringify(objTravel),
       });
-      alert("this travel in db");
+      setErrorMessage("This travel in db!");
+      setTimeout(() => {
+        setErrorMessage(" ");
+      }, 3000);
+
+      // alert("this travel in db");
     }
   };
   const handleSourceAddressSelect = (place) => {
@@ -243,6 +248,11 @@ export default function AddTravel() {
           padding: "20px",
         }}
       >
+        {errorMessage && (
+          <Alert sx={{ mt: "5px" }} severity="error">
+            {errorMessage}
+          </Alert>
+        )}
         <Box>
           <Typography
             color="primary"
@@ -325,10 +335,7 @@ export default function AddTravel() {
             marginTop: "20px",
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => createTravel()}
-          >
+          <Button variant="contained" onClick={() => createTravel()}>
             add
           </Button>
           <Button

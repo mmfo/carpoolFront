@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -41,14 +41,15 @@ export default function Login() {
   const navigate = useNavigate();
   const dataState = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [userObj, setUserObj] = React.useState({
+  const [userObj, setUserObj] = useState({
     UserEmail: "",
     UserPassword: "",
   });
-  const [errors, setErrors] = React.useState({
+  const [errors, setErrors] = useState({
     UserEmail: "",
     UserPassword: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const validate = (name, value) => {
     switch (name) {
@@ -105,7 +106,11 @@ export default function Login() {
       if (res.ok) {
         var data = await res.json();
         if (data.id === 0) {
-          alert("אינך רשום במערכת");
+          setErrorMessage("You are not registered in the system");
+          setTimeout(() => {
+            setErrorMessage(" ");
+          }, 3000);
+          // alert("אינך רשום במערכת");
           navigate("/signup");
         } else {
           console.log(data);
@@ -136,7 +141,11 @@ export default function Login() {
           <Typography color="#09195c" component="h1" variant="h5">
             Log in
           </Typography>
-
+          {errorMessage && (
+            <Alert sx={{ mt: "5px" }} severity="error">
+              {errorMessage}
+            </Alert>
+          )}
           <Box
             component="form"
             sx={{
