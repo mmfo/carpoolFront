@@ -17,16 +17,17 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#09195c",
-      mainLight: "#09195c14",
+      mainLight: "#09195c",
     },
     secondary: {
-      main: "#5876EE",
+      main: "#09195c",
+      // main: "#5876EE",
     },
     case: {
-      yellow: "#f9dd00",
-      purple: "#af4fa4",
-      green: "#81c853",
-      orange: "#fd6308",
+      // yellow: "#f9dd00",
+      // purple: "#af4fa4",
+      // green: "#81c853",
+      // orange: "#fd6308",
     },
   },
 });

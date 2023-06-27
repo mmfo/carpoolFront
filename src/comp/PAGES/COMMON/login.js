@@ -20,7 +20,7 @@ function Copyright(props) {
   return (
     <Typography
       variant="body2"
-      color="text.secondary"
+      color="red"//text.secondary
       align="center"
       {...props}
     >
@@ -106,12 +106,12 @@ export default function Login() {
       if (res.ok) {
         var data = await res.json();
         if (data.id === 0) {
-          setErrorMessage("You are not registered in the system");
-          setTimeout(() => {
-            setErrorMessage(" ");
-          }, 3000);
+         setErrorMessage("You are not registered in the system");
+          // setTimeout(() => {
+          //   setErrorMessage(" ");
+          // }, 3000);
           // alert("אינך רשום במערכת");
-          navigate("/signup");
+         // navigate("/signup");
         } else {
           console.log(data);
           dispatch({ type: "UPDATE_CURRENT_USER", payload: data });
@@ -201,12 +201,12 @@ export default function Login() {
                 }}
               >
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
+                  control={<Checkbox value="remember"  />}//color="primary"
                   label="Remember me"
                 />
               </Box>
               <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
-                <Button fullWidth variant="contained" onClick={handleSubmit}>
+                <Button fullWidth variant="contained" onClick={handleSubmit} style={{backgroundColor:"#09195c"}}>
                   Log In
                 </Button>
               </Box>
