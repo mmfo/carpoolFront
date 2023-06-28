@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Box, Typography } from "@mui/material";
 
+
 export default function Home() {
   const navigate = useNavigate();
   return (
+
     <Box
       component="form"
       sx={{
@@ -15,7 +17,9 @@ export default function Home() {
       }}
     >
       <Box style={{ marginTop: "50px", marginBottom: "15px" }}>
-        <Typography color="primary" variant="h4">
+        <Typography
+         color="primary"
+          variant="h4">
           Home
         </Typography>
       </Box>
@@ -32,20 +36,22 @@ export default function Home() {
       >
         <Button
           variant="outlined"
-          // color="primary"
+          color="primary"
           onClick={() => navigate("/addTravel")}
         >
           addTravel
         </Button>
         <Button
           variant="outlined"
-          // color="primary"
+          color="primary"
           onClick={() => navigate("/driverTravel")}
         >
           driverTravel
         </Button>
       </div>
-      <Typography color="primary" variant="h5">
+      <Typography
+       color="primary" 
+      variant="h5">
       passenger
       </Typography>
       <div
@@ -58,14 +64,14 @@ export default function Home() {
       >
         <Button
           variant="outlined"
-          // color="primary"
+          color="primary"
           onClick={() => navigate("/passengerTravel")}
         >
           passengerTravel
         </Button>
         <Button
           variant="outlined"
-          // color="primary"
+          color="primary"
           onClick={() => navigate("/travelSearch")}
         >
           travelSearch

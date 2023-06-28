@@ -19,19 +19,25 @@ import Autocomplete from "@mui/material/Autocomplete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { debounce } from "@mui/material/utils";
 import parse from "autosuggest-highlight/parse";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export default function AddTravel() {
   const dataState = useSelector((state) => state);
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [openDialog, setOpenDialog] = useState(false);
   const [objTravel, setObjTravel] = useState({
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "1",
-
+    
     DestCity: "",
     DestStreet: "",
     DestHouseNumber: "1",
-
+    
     TimeTravel: new Date(), // new Date(),
     UserId: parseInt(dataState.id),
     freeSpace: 1,
@@ -40,18 +46,27 @@ export default function AddTravel() {
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "",
-
+    
     DestCity: "",
     DestStreet: "",
     DestHouseNumber: "",
-
+    
     TimeTravel: new Date(), // new Date(),
     UserId: dataState.id,
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
-
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
   const validate = (name, value) => {
     switch (name) {
       case "SourceCity":
@@ -134,6 +149,7 @@ export default function AddTravel() {
 
       // alert("this travel in db");
     }
+    setOpenDialog(true);
   };
   const handleSourceAddressSelect = (place) => {
     const addressComponents = place.address_components;
@@ -227,6 +243,7 @@ export default function AddTravel() {
       componentRestrictions: { country: "il" },
     },
   });
+
   return (
     <>
       <Box
@@ -235,7 +252,7 @@ export default function AddTravel() {
         }}
       >
         <Typography color="primary" variant="h4">
-          AddTravel
+          Add Travel
         </Typography>
       </Box>
       <Box
@@ -347,6 +364,26 @@ export default function AddTravel() {
             Cancel
           </Button>
         </Box>
+
+        {openDialog && (
+          <Box>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Thanks for adding a travel!
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => navigate("/")}>
+                  Back To Add A New Travel
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+        )}
       </Box>
     </>
   );

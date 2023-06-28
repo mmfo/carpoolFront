@@ -20,7 +20,6 @@ function Copyright(props) {
   return (
     <Typography
       variant="body2"
-      color="red"//text.secondary
       align="center"
       {...props}
     >
@@ -124,7 +123,6 @@ export default function Login() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -135,10 +133,13 @@ export default function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#09195c" }}>
+          <Avatar sx={{ m: 1,
+            //  bgcolor: "#09195c" 
+             }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography color="#09195c" component="h1" variant="h5">
+          <Typography
+            component="h1" variant="h5">
             Log in
           </Typography>
           {errorMessage && (
@@ -206,7 +207,9 @@ export default function Login() {
                 />
               </Box>
               <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
-                <Button fullWidth variant="contained" onClick={handleSubmit} style={{backgroundColor:"#09195c"}}>
+                <Button fullWidth variant="contained" onClick={handleSubmit}
+                //  style={{backgroundColor:"#09195c"}}
+                 >
                   Log In
                 </Button>
               </Box>
@@ -232,6 +235,5 @@ export default function Login() {
 
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
   );
 }

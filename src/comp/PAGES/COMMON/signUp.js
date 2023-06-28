@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,16 +18,9 @@ import Alert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>
+      <Link href="#">Your Website</Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -130,141 +123,138 @@ export default function SignUp() {
     setUserObj((prev) => ({ ...prev, [key]: selected }));
   };
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 1.5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar
           sx={{
-            marginTop: 1.5,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            m: 1,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#09195c" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <LockOutlinedIcon />
+        </Avatar>
 
-          <Typography color="#09195c" component="h1" variant="h5">
-            Sign up
-          </Typography>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
 
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1.5, width: "95%" },
-              margin: "0 auto",
-              maxWidth: "400px",
-              textAlign: "center",
-            }}
-          >
-            <Box style={{ width: "400px" }} container spacing={2}>
-              <Box item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  autoFocus
-                  id="name"
-                  label="Name"
-                  autoComplete="name"
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserName");
-                  }}
-                />
-                {errors.UserName && (
-                  <Alert severity="error">{errors.UserName} </Alert>
-                )}
-              </Box>
-              <Box item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserEmail");
-                  }}
-                />
-                {errors.UserEmail && (
-                  <Alert severity="error">{errors.UserEmail} </Alert>
-                )}
-              </Box>
-              <Box item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="number"
-                  label="Phone Number"
-                  name="number"
-                  autoComplete="number"
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserPhone");
-                  }}
-                />
-                {errors.UserPhone && (
-                  <Alert severity="error">{errors.UserPhone} </Alert>
-                )}
-              </Box>
-              <Box item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="password"
-                  label="Password"
-                  type="password"
-                  autoComplete="new-password"
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserPassword");
-                  }}
-                />
-                {errors.UserPassword && (
-                  <Alert severity="error">{errors.UserPassword} </Alert>
-                )}
-              </Box>
-              <Box
-                item
-                xs={12}
-                style={{
-                  margin: "5px",
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1.5, width: "95%" },
+            margin: "0 auto",
+            maxWidth: "400px",
+            textAlign: "center",
+          }}
+        >
+          <Box style={{ width: "400px" }} container spacing={2}>
+            <Box item xs={12}>
+              <TextField
+                required
+                fullWidth
+                autoFocus
+                variant="outlined"
+                id="name"
+                label="Name"
+                autoComplete="name"
+                onChange={(e) => {
+                  onChange(e.target.value, "UserName");
                 }}
-              >
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Box>
+              />
+              {errors.UserName && (
+                <Alert severity="error">{errors.UserName} </Alert>
+              )}
             </Box>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 1.5,
-                mb: 2,
+            <Box item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={(e) => {
+                  onChange(e.target.value, "UserEmail");
+                }}
+              />
+              {errors.UserEmail && (
+                <Alert severity="error">{errors.UserEmail} </Alert>
+              )}
+            </Box>
+            <Box item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="number"
+                label="Phone Number"
+                name="number"
+                autoComplete="number"
+                onChange={(e) => {
+                  onChange(e.target.value, "UserPhone");
+                }}
+              />
+              {errors.UserPhone && (
+                <Alert severity="error">{errors.UserPhone} </Alert>
+              )}
+            </Box>
+            <Box item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="password"
+                label="Password"
+                type="password"
+                autoComplete="new-password"
+                onChange={(e) => {
+                  onChange(e.target.value, "UserPassword");
+                }}
+              />
+              {errors.UserPassword && (
+                <Alert severity="error">{errors.UserPassword} </Alert>
+              )}
+            </Box>
+            <Box
+              item
+              xs={12}
+              style={{
+                margin: "5px",
               }}
-              onClick={handleSubmit}
             >
-              Sign Up
-            </Button>
-            <Box container>
-              <Box item>
-                <Link
-                  href="#"
-                  variant="body2"
-                  onClick={() => navigate("/login")}
-                >
-                  Already have an account? Log in
-                </Link>
-              </Box>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and updates via email."
+              />
+            </Box>
+          </Box>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 1.5,
+              mb: 2,
+            }}
+            onClick={handleSubmit}
+          >
+            Sign Up
+          </Button>
+          <Box container>
+            <Box item>
+              <Link href="#" variant="body2" onClick={() => navigate("/login")}>
+                Already have an account? Log in
+              </Link>
             </Box>
           </Box>
         </Box>
+      </Box>
 
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }

@@ -5,6 +5,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import { Provider } from "react-redux";
+import { purple } from "@mui/material/colors";
 
 import createCache from "@emotion/cache";
 import store1 from "./comp/REDUX/store";
@@ -14,20 +15,13 @@ const cacheRtl = createCache({
 });
 const theme = createTheme({
   direction: "rtl",
+
   palette: {
     primary: {
       main: "#09195c",
-      mainLight: "#09195c",
     },
-    secondary: {
-      main: "#09195c",
-      // main: "#5876EE",
-    },
-    case: {
-      // yellow: "#f9dd00",
-      // purple: "#af4fa4",
-      // green: "#81c853",
-      // orange: "#fd6308",
+    text: {
+      primary: "#09195c",
     },
   },
 });
