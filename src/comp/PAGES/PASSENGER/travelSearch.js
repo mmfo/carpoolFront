@@ -36,12 +36,12 @@ export default function TravelSearch() {
   const navigate = useNavigate();
   const [searchTravel, setSearchTravel] = useState({
     //{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
-    SourceCity: "",
+    SourceCity: "קרית ספר",
     SourceStreet: "",
     SourceHouseNumber: "",
 
     DestCity: "בני ברק",
-    DestStreet: "דונולו",
+    DestStreet: "",
     DestHouseNumber: "",
 
     TimeTravel: new Date(),
@@ -49,32 +49,32 @@ export default function TravelSearch() {
   });
 
   const [foundTravelList, setFoundTravelList] = useState([
-    {
-      destCity: "Tel Aviv-Yafo",
-      destHouseNumber: "",
-      destStreet: "Allenby Street",
-      freeSpace: 1,
-      sourceCity: "Bnei Brak",
-      sourceHouseNumber: "",
-      sourceStreet: "Donnolo Street",
-      timeTravel: "2023-06-07T18:15:23.824Z",
-      userEmail: "m0583267055@gmail.com",
-      userName: "ג",
-      userPhone: null,
-    },
-    {
-      destCity: "Tel Aviv-Yafo",
-      destHouseNumber: "",
-      destStreet: "Allenby Street",
-      freeSpace: 1,
-      sourceCity: "Bnei Brak",
-      sourceHouseNumber: "",
-      sourceStreet: "Donnolo Street",
-      timeTravel: "2023-06-07T18:15:23.824Z",
-      userEmail: "m0583267055@gmail.com",
-      userName: "ג",
-      userPhone: null,
-    },
+    // {
+    //   destCity: "Tel Aviv-Yafo",
+    //   destHouseNumber: "",
+    //   destStreet: "Allenby Street",
+    //   freeSpace: 1,
+    //   sourceCity: "Bnei Brak",
+    //   sourceHouseNumber: "",
+    //   sourceStreet: "Donnolo Street",
+    //   timeTravel: "2023-06-07T18:15:23.824Z",
+    //   userEmail: "m0583267055@gmail.com",
+    //   userName: "ג",
+    //   userPhone: null,
+    // },
+    // {
+    //   destCity: "Tel Aviv-Yafo",
+    //   destHouseNumber: "",
+    //   destStreet: "Allenby Street",
+    //   freeSpace: 1,
+    //   sourceCity: "Bnei Brak",
+    //   sourceHouseNumber: "",
+    //   sourceStreet: "Donnolo Street",
+    //   timeTravel: "2023-06-07T18:15:23.824Z",
+    //   userEmail: "m0583267055@gmail.com",
+    //   userName: "ג",
+    //   userPhone: null,
+    // },
   ]);
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
@@ -83,7 +83,7 @@ export default function TravelSearch() {
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
   const [loadMap, setLoadMap] = useState(false);
-  const [loadResultSearch, setResultSearch] = useState(false);
+  const [loadResultSearch, setloadResultSearch] = useState(false);
   const [emptyFoundTravelList, setEmptyFoundTravelList] = useState(false);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function TravelSearch() {
   };
 
   const onSubmit = async () => {
-    setResultSearch(true);
+    setloadResultSearch(true);
     var res = await Travel.TravelSearch(searchTravel);
     console.log(res);
     setFoundTravelList(res);
@@ -153,7 +153,7 @@ export default function TravelSearch() {
     if (foundTravelList.length == 0) {
       setEmptyFoundTravelList(true);
     }
-    setResultSearch(false);
+    setloadResultSearch(false);
   };
   // const onclickmap = async () => {
   //   var res = await Travel.NevigateRoute();
@@ -335,20 +335,27 @@ export default function TravelSearch() {
               <CircularProgress />
             </Box>
           ) : (
-            <Box>
-              {/* {emptyFoundTravelList&& <Alert>not found</Alert>} */}
-              {foundTravelList.length > 0 &&
-                foundTravelList.map((item) => {
-                  return (
-                    <Box style={{ margin: "20px" }}>
-                      <CardTravel data={item} />
-                    </Box>
-                  );
-                })}
-            </Box>
+            <>
+              <Box>
+                {emptyFoundTravelList && <Alert>not found</Alert>}
+                {foundTravelList.length > 0 &&
+                  foundTravelList.map((item) => {
+                    return (
+                      <Box style={{ margin: "20px" }}>
+                        <CardTravel
+                          data={item}
+                          setSearchTravel={setSearchTravel}
+                        />
+                      </Box>
+                    );
+                  })}
+              </Box>
+            </>
           )}
         </Box>
-        <Box style={{ display: "flex", width: "30%" }}>
+        
+        {foundTravelList.length > 0 &&
+        <Box style={{ display: "flex", width: "30%" }}>        
           {!loadMap ? (
             <Box sx={{ display: "flex" }}>
               <CircularProgress />
@@ -357,6 +364,7 @@ export default function TravelSearch() {
             <GMap searchTravel={searchTravel} />
           )}
         </Box>
+        }
       </Box>
     </>
   );

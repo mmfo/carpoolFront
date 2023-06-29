@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-const GMap = (searchTravel) => {
+const GMap = ({ searchTravel }) => {
   const googleMapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [source, setSource] = useState(null);
@@ -15,21 +15,35 @@ const GMap = (searchTravel) => {
     if (!map) return;
 
     const geocoder = new window.google.maps.Geocoder();
-   // console.log(searchTravel)
-console.log({ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${searchTravel.DestHouseNumber}` })
-    geocoder.geocode({ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }, (results, status) => {//{ address: `${searchTravel.SourceCity}, ${searchTravel.SourceStreet}, ${searchTravel.SourceHouseNumber}` }
-      if (status === 'OK' && results.length > 0) {
-        const sourceLocation = results[0].geometry.location;
-        setSource(sourceLocation);
-      }
+    console.log(searchTravel);
+    console.log({
+      address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${searchTravel.DestHouseNumber}`,//{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
     });
+    geocoder.geocode(
+      {
+        address: `${searchTravel.SourceCity}, ${searchTravel.SourceStreet}, ${searchTravel.SourceHouseNumber}`,
+      },
+      (results, status) => {
+        //{ address: `${searchTravel.SourceCity}, ${searchTravel.SourceStreet}, ${searchTravel.SourceHouseNumber}` }
+        if (status === "OK" && results.length > 0) {
+          const sourceLocation = results[0].geometry.location;
+          setSource(sourceLocation);
+        }
+      }
+    );
 
-    geocoder.geocode({ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }, (results, status) => {//{ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${searchTravel.DestHouseNumber}` }
-      if (status === 'OK' && results.length > 0) {
-        const destinationLocation = results[0].geometry.location;
-        setDestination(destinationLocation);
+    geocoder.geocode(
+      {
+        address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${searchTravel.DestHouseNumber}`,
+      },
+      (results, status) => {
+        //{ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${searchTravel.DestHouseNumber}` }
+        if (status === "OK" && results.length > 0) {
+          const destinationLocation = results[0].geometry.location;
+          setDestination(destinationLocation);
+        }
       }
-    });
+    );
   }, [map]);
 
   useEffect(() => {
@@ -41,11 +55,11 @@ console.log({ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${
     const request = {
       origin: source,
       destination: destination,
-      travelMode: 'DRIVING',
+      travelMode: "DRIVING",
     };
 
     directionsService.route(request, (response, status) => {
-      if (status === 'OK') {
+      if (status === "OK") {
         directionsRenderer.setDirections(response);
         directionsRenderer.setMap(map);
       }
@@ -54,7 +68,7 @@ console.log({ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${
 
   const initGoogleMap = () => {
     return new window.google.maps.Map(googleMapRef.current, {
-      center: new window.google.maps.LatLng(37.7699298, -122.4469157),
+      //center: new window.google.maps.LatLng(37.7699298, -122.4469157),
       zoom: 8,
     });
   };
@@ -63,4 +77,3 @@ console.log({ address: `${searchTravel.DestCity}, ${searchTravel.DestStreet}, ${
 };
 
 export default GMap;
-

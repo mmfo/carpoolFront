@@ -27,6 +27,7 @@ export default function Profile() {
         padding: "10px",
       }}
     >
+      {data.userPhone}
       <Box style={{ marginTop: "30px" }}>
         <Typography color="primary" variant="h4">
           Profile

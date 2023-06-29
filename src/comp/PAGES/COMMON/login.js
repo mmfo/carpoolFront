@@ -98,7 +98,7 @@ export default function Login() {
       return;
     }
     if (userObj.UserPassword && userObj.UserEmail) {
-      var res = await fetch(
+      var res = await fetch(//fetch all user's details
         `${httpUser}/${userObj.UserEmail}/${userObj.UserPassword}`
       );
       console.log("res", res);

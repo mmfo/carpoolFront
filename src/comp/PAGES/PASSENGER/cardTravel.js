@@ -25,10 +25,24 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const CardTravel = ({ data }) => {
+const CardTravel = ({ data, setSearchTravel }) => {
   const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
+  const handlecreateNavigate = () => {
+    debugger;
+    setSearchTravel((prev) => ({
+      ...prev,
+      ["SourceCity"]: data.sourceCity,
+      ["SourceStreet"]: data.sourceStreet,
+      ["SourceHouseNumber"]: data.sourceHouseNumber,
+    }));
+    setSearchTravel((prev) => ({
+      ...prev,
+      ["DestCity"]: data.destCity,
+      ["DestStreet"]: data.destStreet,
+      ["DestHouseNumber"]: data.destHouseNumber,
+    }));
+  };
   const navigate = useNavigate();
 
   const handleExpandClick = () => {
@@ -54,7 +68,7 @@ const CardTravel = ({ data }) => {
             <Box fontWeight="bold" display="inline">
               Source City :
             </Box>
-            {data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
+            {data.id}{data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
           </Typography>
 
           {/* <Typography sx={{ mb: 1.5 }} color="primary">
@@ -91,6 +105,7 @@ const CardTravel = ({ data }) => {
             {/* אני מעוניין בנסיעה זו */}
             Interested in this Travel
           </Button>
+          <Button onClick={() => handlecreateNavigate()}>Show Map</Button>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}

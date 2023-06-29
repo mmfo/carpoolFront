@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Users from "../../SERVICES/UserService";
 import Alert from "@mui/material/Alert";
+import { useDispatch } from "react-redux";
 
 function Copyright(props) {
   return (
@@ -30,6 +31,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userObj, setUserObj] = useState({
     UserName: "",
@@ -97,13 +99,13 @@ export default function SignUp() {
       setErrors(validationErrors);
       return;
     }
-
-    //   var res1 = await Users.isEmailExist(userObj.UserEmail)
-    //  if (res.ok)//if the email exist
-    // {
-    //   alert(' email already in the bd , go to log in ')
-    //   navigate('/login')
-    // }
+    var res1 = await Users.isEmailExist(userObj.UserEmail)
+    debugger
+    if (res1.ok)//if the email exist
+    {
+      alert(' email already in the bd , go to log in ')
+      navigate('/login')
+    }
     if (userObj.UserName && userObj.UserEmail && userObj.UserPassword) {
       const data = {
         UserName: userObj.UserName,
@@ -112,10 +114,15 @@ export default function SignUp() {
       };
       console.log("----data----", data);
       var res = await Users.createUser(userObj);
-      window.alert("נשלח בהצלחה!", JSON.stringify(data));
-      if (res !== null)
-        //??
+      console.log("----res----", res);
+      if (res.ok){
+      dispatch({ type: "UPDATE_CURRENT_USER1", payload: userObj });      
+      window.alert("נרשם בהצלחה!", JSON.stringify(data)); //לשנות להודעה שנרשמת בהצלחה      
         navigate("/");
+      }
+      else{
+        alert("error !")
+      }
     }
   };
   const onChange = (selected, key) => {

@@ -22,8 +22,7 @@ const Users = {
             },
             body: JSON.stringify(user)
         })
-        
-        return result.data;
+        return result;
     },
     isEmailExist: async (UserEmail) => {
         let result = await fetch(`${httpUser}/isEmailExist`, {
