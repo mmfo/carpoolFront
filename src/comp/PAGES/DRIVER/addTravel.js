@@ -33,11 +33,11 @@ export default function AddTravel() {
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "1",
-    
+
     DestCity: "",
     DestStreet: "",
     DestHouseNumber: "1",
-    
+
     TimeTravel: new Date(), // new Date(),
     UserId: parseInt(dataState.id),
     freeSpace: 1,
@@ -46,11 +46,11 @@ export default function AddTravel() {
     SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "",
-    
+
     DestCity: "",
     DestStreet: "",
     DestHouseNumber: "",
-    
+
     TimeTravel: new Date(), // new Date(),
     UserId: dataState.id,
   });
@@ -58,15 +58,15 @@ export default function AddTravel() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const validate = (name, value) => {
     switch (name) {
       case "SourceCity":
@@ -142,10 +142,10 @@ export default function AddTravel() {
         },
         body: JSON.stringify(objTravel),
       });
-      setErrorMessage("This travel in db!");
-      setTimeout(() => {
-        setErrorMessage(" ");
-      }, 3000);
+      // setErrorMessage("This travel in db!");
+      // setTimeout(() => {
+      //   setErrorMessage(" ");
+      // }, 3000);
 
       // alert("this travel in db");
     }
@@ -376,9 +376,29 @@ export default function AddTravel() {
               <DialogTitle id="alert-dialog-title">
                 Thanks for adding a travel!
               </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Thank you for using our service
+                </DialogContentText>
+                <DialogContentText id="alert-dialog-description">
+                  For more services you can continue on our website
+                </DialogContentText>
+              </DialogContent>
               <DialogActions>
-                <Button onClick={() => navigate("/")}>
-                  Back To Add A New Travel
+                <Button
+                  onClick={() => {
+                    navigate("/addTravel");
+                    window.location.reload(false);
+                  }}
+                >
+                  Add A New Travel
+                </Button>
+                <Button
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Search A Travel
                 </Button>
               </DialogActions>
             </Dialog>
