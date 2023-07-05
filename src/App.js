@@ -9,7 +9,8 @@ import { purple } from "@mui/material/colors";
 import { Box } from "@mui/material";
 import image from "./comp/ASSETS/map.jpg";
 import image1 from "./comp/ASSETS/planingTravel.jpg";
-import image2 from "./comp/ASSETS/imagetravel.jpg";
+import image2 from "./comp/ASSETS/planingTravel.jpg";
+import image3 from "./comp/ASSETS/planingTravel1.jpg";
 
 import createCache from "@emotion/cache";
 import store1 from "./comp/REDUX/store";
@@ -49,7 +50,7 @@ function App() {
             // backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
             // background: "rgba(0, 0, 0, 0.5)",
-            backgroundImage: `url(${image2})`,
+            backgroundImage: `url(${image3})`,
             // opacity: 0.5,
             height: "100vh",
             backgroundPosition: "center",
