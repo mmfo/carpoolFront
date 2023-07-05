@@ -6,6 +6,10 @@ import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import { Provider } from "react-redux";
 import { purple } from "@mui/material/colors";
+import { Box } from "@mui/material";
+import image from "./comp/ASSETS/map.jpg";
+import image1 from "./comp/ASSETS/planingTravel.jpg";
+import image2 from "./comp/ASSETS/imagetravel.jpg";
 
 import createCache from "@emotion/cache";
 import store1 from "./comp/REDUX/store";
@@ -30,9 +34,33 @@ function App() {
     <Provider store={store1}>
       {/* <CacheProvider value={cacheRtl}> */}
       <ThemeProvider theme={theme}>
-        <div className="App">
+        <Box
+          //  style={{ backgroundColor: "green" }}
+          // style={{ backgroundColor: "green", height: "1000px", width: "100%" }}
+
+          style={{
+            // backgroundColor: "green",
+            // height: "650px",
+            // width: "100%",
+            // backgroundImage: `url(${image})`,
+            // backgroundRepeat: "no-repeat",
+            // backgroundSize: 'cover',
+            // opacity: 0.6
+            // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+            // background: "rgba(0, 0, 0, 0.5)",
+            backgroundImage: `url(${image2})`,
+            // opacity: 0.5,
+            height: "100vh",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+
+            // opacity:0.2,
+          }}
+        >
           <Router />
-        </div>
+        </Box>
       </ThemeProvider>
       {/* </CacheProvider> */}
     </Provider>

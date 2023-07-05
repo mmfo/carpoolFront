@@ -17,16 +17,16 @@ import Users from "../../SERVICES/UserService";
 import Alert from "@mui/material/Alert";
 import { useDispatch } from "react-redux";
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" align="center" {...props}>
-      {"Copyright © "}
-      <Link href="#">Your Website</Link>
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography variant="body2" align="center" {...props}>
+//       {"Copyright © "}
+//       <Link href="#">Your Website</Link>
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 
@@ -261,7 +261,7 @@ export default function SignUp() {
         </Box>
       </Box>
 
-      <Copyright sx={{ mt: 5 }} />
+      {/* <Copyright sx={{ mt: 5 }} /> */}
     </Container>
   );
 }

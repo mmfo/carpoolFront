@@ -353,18 +353,18 @@ export default function TravelSearch() {
             </>
           )}
         </Box>
-        
-        {foundTravelList.length > 0 &&
-        <Box style={{ display: "flex", width: "30%" }}>        
-          {!loadMap ? (
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <GMap searchTravel={searchTravel} />
-          )}
-        </Box>
-        }
+
+        {foundTravelList.length > 0 && (
+          <Box style={{ display: "flex", width: "30%" }}>
+            {!loadMap ? (
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <GMap searchTravel={searchTravel} />
+            )}
+          </Box>
+        )}
       </Box>
     </>
   );

@@ -16,22 +16,22 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "@mui/material/Alert";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography
+//       variant="body2"
+//       align="center"
+//       {...props}
+//     >
+//       {"Copyright © "}
+//       <Link color="inherit" href="#">
+//         Your Website
+//       </Link>
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme();
 const httpUser = "https://localhost:7293/api/User";
@@ -98,19 +98,20 @@ export default function Login() {
       return;
     }
     if (userObj.UserPassword && userObj.UserEmail) {
-      var res = await fetch(//fetch all user's details
+      var res = await fetch(
+        //fetch all user's details
         `${httpUser}/${userObj.UserEmail}/${userObj.UserPassword}`
       );
       console.log("res", res);
       if (res.ok) {
         var data = await res.json();
         if (data.id === 0) {
-         setErrorMessage("You are not registered in the system");
+          setErrorMessage("You are not registered in the system");
           // setTimeout(() => {
           //   setErrorMessage(" ");
           // }, 3000);
           // alert("אינך רשום במערכת");
-         // navigate("/signup");
+          // navigate("/signup");
         } else {
           console.log(data);
           dispatch({ type: "UPDATE_CURRENT_USER", payload: data });
@@ -123,117 +124,122 @@ export default function Login() {
   };
 
   return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 1.5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar
           sx={{
-            marginTop: 1.5,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            m: 1,
+            //  bgcolor: "#09195c"
           }}
         >
-          <Avatar sx={{ m: 1,
-            //  bgcolor: "#09195c" 
-             }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography
-            component="h1" variant="h5">
-            Log in
-          </Typography>
-          {errorMessage && (
-            <Alert sx={{ mt: "5px" }} severity="error">
-              {errorMessage}
-            </Alert>
-          )}
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1.5, width: "95%" },
-              margin: "0 auto",
-              maxWidth: "400px",
-              textAlign: "center",
-              //  padding: "10px",
-            }}
-          >
-            <Box style={{ width: "400px" }} container spacing={2}>
-              <Box item xs={12}>
-                <TextField
-                  // margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  // name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserEmail");
-                  }}
-                />
-
-                {errors.UserEmail && (
-                  <Alert severity="error">{errors.UserEmail} </Alert>
-                )}
-              </Box>
-              <Box item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={(e) => {
-                    onChange(e.target.value, "UserPassword");
-                  }}
-                />
-                {errors.UserPassword && (
-                  <Alert severity="error">{errors.UserPassword} </Alert>
-                )}
-              </Box>
-              <Box
-                item
-                xs={12}
-                style={{
-                  margin: "5px",
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Log in
+        </Typography>
+        {errorMessage && (
+          <Alert sx={{ mt: "5px" }} severity="error">
+            {errorMessage}
+          </Alert>
+        )}
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1.5, width: "95%" },
+            margin: "0 auto",
+            maxWidth: "400px",
+            textAlign: "center",
+            //  padding: "10px",
+          }}
+        >
+          <Box style={{ width: "400px" }} container spacing={2}>
+            <Box item xs={12}>
+              <TextField
+                // margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                // name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => {
+                  onChange(e.target.value, "UserEmail");
                 }}
-              >
-                <FormControlLabel
-                  control={<Checkbox value="remember"  />}//color="primary"
-                  label="Remember me"
-                />
-              </Box>
-              <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
-                <Button fullWidth variant="contained" onClick={handleSubmit}
+              />
+
+              {errors.UserEmail && (
+                <Alert severity="error">{errors.UserEmail} </Alert>
+              )}
+            </Box>
+            <Box item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => {
+                  onChange(e.target.value, "UserPassword");
+                }}
+              />
+              {errors.UserPassword && (
+                <Alert severity="error">{errors.UserPassword} </Alert>
+              )}
+            </Box>
+            <Box
+              item
+              xs={12}
+              style={{
+                margin: "5px",
+              }}
+            >
+              <FormControlLabel
+                control={<Checkbox value="remember" />} //color="primary"
+                label="Remember me"
+              />
+            </Box>
+            <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={handleSubmit}
                 //  style={{backgroundColor:"#09195c"}}
-                 >
-                  Log In
-                </Button>
+              >
+                Log In
+              </Button>
+            </Box>
+            <Box style={{ display: "flex", justifyContent: "space-around" }}>
+              <Box>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
               </Box>
-              <Box style={{ display: "flex", justifyContent: "space-around" }}>
-                <Box>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Box>
-                <Box>
-                  <Link
-                    href="#"
-                    variant="body2"
-                    onClick={() => navigate("/signup")}
-                  >
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Box>
+              <Box>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => navigate("/signup")}
+                >
+                  {"Don't have an account? Sign Up"}
+                </Link>
               </Box>
             </Box>
           </Box>
         </Box>
+      </Box>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+      {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+    </Container>
   );
 }
