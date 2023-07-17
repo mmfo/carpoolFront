@@ -27,7 +27,6 @@ export default function Profile() {
         padding: "10px",
       }}
     >
-      {data.userPhone}
       <Box style={{ marginTop: "30px" }}>
         <Typography color="primary" variant="h4">
           Profile
@@ -40,15 +39,6 @@ export default function Profile() {
           width: "400px",
         }}
       >
-        <Box style={{ marginTop: "10px", paddingBottom: "10px" }}>
-          <TextField
-            fullWidth
-            required
-            value={data.id}
-            onChange={(e) => setUsers({ ...users, id: e.target.value })}
-            label="ID:"
-          />
-        </Box>
         <Box style={{ marginTop: "10px", paddingBottom: "10px" }}>
           <TextField
             fullWidth
@@ -67,6 +57,15 @@ export default function Profile() {
               setUsers({ ...users, userPassword: e.target.value })
             }
             label="UserPassword:"
+          />
+        </Box>
+        <Box style={{ marginTop: "10px", paddingBottom: "10px" }}>
+          <TextField
+            fullWidth
+            required
+            value={data.userPhone}
+            onChange={(e) => setUsers({ ...users, userPhone: e.target.value })}
+            label="Phone:"
           />
         </Box>
         <Box style={{ marginTop: "10px", paddingBottom: "10px" }}>
