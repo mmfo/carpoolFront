@@ -100,11 +100,11 @@ export default function SignUp() {
       return;
     }
     var res1 = await Users.isEmailExist(userObj.UserEmail)
-    debugger
     if (res1.ok)//if the email exist
     {
       alert(' email already in the bd , go to log in ')
       navigate('/login')
+      return
     }
     if (userObj.UserName && userObj.UserEmail && userObj.UserPassword) {
       const data = {

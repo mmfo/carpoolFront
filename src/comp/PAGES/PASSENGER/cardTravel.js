@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AlertDialog from "./DialogMui";
+import DialogMap from "./DialogMap";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -25,9 +26,10 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const CardTravel = ({ data, setSearchTravel }) => {
+const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
   const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogMap, setOpenDialogMap] = useState(false);
   const handlecreateNavigate = () => {
     debugger;
     setSearchTravel((prev) => ({
@@ -68,7 +70,7 @@ const CardTravel = ({ data, setSearchTravel }) => {
             <Box fontWeight="bold" display="inline">
               Source City :
             </Box>
-            {data.id}{data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
+            {data.id+"   "}{data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
           </Typography>
 
           {/* <Typography sx={{ mb: 1.5 }} color="primary">
@@ -105,7 +107,7 @@ const CardTravel = ({ data, setSearchTravel }) => {
             {/* אני מעוניין בנסיעה זו */}
             Interested in this Travel
           </Button>
-          <Button onClick={() => handlecreateNavigate()}>Show Map</Button>
+          <Button onClick={() => setOpenDialogMap(true)}>Show Map</Button>
           <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
@@ -124,6 +126,10 @@ const CardTravel = ({ data, setSearchTravel }) => {
       {openDialog && (
         <AlertDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
       )}
+      {
+        openDialogMap&&
+        <DialogMap openDialog={openDialogMap} setOpenDialog={setOpenDialogMap} data={data}/>
+      }
     </Grid>
   );
 };

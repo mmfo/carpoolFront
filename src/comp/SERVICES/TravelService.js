@@ -56,6 +56,22 @@ const Travel = {
             return data
         }
     },
+    getFutureTravelsByUserId: async (userId) => {
+        var res = await fetch(`${httpTravel}/getFutureTravelsByUserId/${userId}`)
+        if (res.ok) {
+            var data = await res.json()
+            return data
+        }
+
+    },
+    getPastTravelsByUserId: async (userId) => {
+        var res = await fetch(`${httpTravel}/getPastTravelsByUserId/${userId}`)
+        if (res.ok) {
+            var data = await res.json()
+            return data
+        }
+
+    },
     NevigateRoute: async () => {
         try{
             let result = await fetch(`${httpTravel}/nevigate`, {

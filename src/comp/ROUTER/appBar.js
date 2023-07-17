@@ -36,6 +36,7 @@ export default function ButtonAppBar() {
     { title: "signup", path: "/signup" },
     { title: "profile", path: "/profile" },
     { title: "home", path: "/" },
+    { title: "yourTravels", path: "/driverTravels" },
   ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   // const classes = useStyles();

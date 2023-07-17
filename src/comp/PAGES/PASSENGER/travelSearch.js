@@ -38,11 +38,11 @@ export default function TravelSearch() {
     //{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
     SourceCity: "קרית ספר",
     SourceStreet: "",
-    SourceHouseNumber: "",
+    SourceHouseNumber: "1",
 
     DestCity: "בני ברק",
     DestStreet: "",
-    DestHouseNumber: "",
+    DestHouseNumber: "1",
 
     TimeTravel: new Date(),
     freeSpace: 1,
@@ -78,7 +78,8 @@ export default function TravelSearch() {
   ]);
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
-
+  const [showMap, setShowMap] = useState(false);
+  
   const onChange = (selected, key) => {
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
@@ -150,8 +151,11 @@ export default function TravelSearch() {
     console.log(res);
     setFoundTravelList(res);
     console.log("foundTravelList", foundTravelList);
-    if (foundTravelList.length == 0) {
+    if (res.length == 0) {
       setEmptyFoundTravelList(true);
+    }
+    else{
+      setEmptyFoundTravelList(false);
     }
     setloadResultSearch(false);
   };
@@ -165,7 +169,9 @@ export default function TravelSearch() {
     id: "google-map-script",
     // googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
   });
-
+useEffect(()=>{
+setShowMap(true)
+},[searchTravel])
   const { ref: materialRefSource } = usePlacesWidget({
     apiKey: { apikey },
     //style:{ width: "70%" },
@@ -345,6 +351,7 @@ export default function TravelSearch() {
                         <CardTravel
                           data={item}
                           setSearchTravel={setSearchTravel}
+                          searchTravel={searchTravel}
                         />
                       </Box>
                     );
@@ -354,7 +361,7 @@ export default function TravelSearch() {
           )}
         </Box>
 
-        {foundTravelList.length > 0 && (
+        {/* {foundTravelList.length > 0&& (
           <Box style={{ display: "flex", width: "30%" }}>
             {!loadMap ? (
               <Box sx={{ display: "flex" }}>
@@ -364,7 +371,7 @@ export default function TravelSearch() {
               <GMap searchTravel={searchTravel} />
             )}
           </Box>
-        )}
+        )} */}
       </Box>
     </>
   );

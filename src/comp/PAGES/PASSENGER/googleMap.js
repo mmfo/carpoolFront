@@ -5,13 +5,14 @@ const GMap = ({ searchTravel }) => {
   const [map, setMap] = useState(null);
   const [source, setSource] = useState(null);
   const [destination, setDestination] = useState(null);
-
+  
   useEffect(() => {
     const googleMap = initGoogleMap();
     setMap(googleMap);
   }, []);
 
   useEffect(() => {
+    debugger
     if (!map) return;
 
     const geocoder = new window.google.maps.Geocoder();

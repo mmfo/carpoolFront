@@ -33,7 +33,7 @@ const Users = {
             body: JSON.stringify(UserEmail)
         })        
         return result;
-    },
+    },    
     deleteUser: async (id) => {
         try {
             let res = await axios.delete(`${httpUser}/${id}`)

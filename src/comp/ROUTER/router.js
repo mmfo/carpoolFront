@@ -6,12 +6,11 @@ import SignUp from "../PAGES/COMMON/signUp";
 import NavBar from "./navBar";
 import Profile from "../PAGES/COMMON/profile";
 import AddTravel from "../PAGES/DRIVER/addTravel";
-import DriverTravel from "../PAGES/DRIVER/driverTravel";
 import PassengerTravel from "../PAGES/PASSENGER/passengerTravel";
 import TravelSearch from "../PAGES/PASSENGER/travelSearch";
 import ButtonAppBar from "./appBar";
 import FoundTravel from "../PAGES/PASSENGER/foundTravel";
-import { Button, Box, Typography } from "@mui/material";
+import DriverTravels from "../PAGES/DRIVER/driverTravels";
 
 export default function Router() {
   return (
@@ -25,7 +24,7 @@ export default function Router() {
         <Route path="/profile" element={<Profile />} />
         {/* DRIVER  */}
         <Route path="/addTravel" element={<AddTravel />} />
-        <Route path="/driverTravel" element={<DriverTravel />} />
+        <Route path="/driverTravels" element={<DriverTravels />} />
         {/* PASSENGER */}
         <Route path="/passengerTravel" element={<PassengerTravel />} />
         <Route path="/travelSearch" element={<TravelSearch />} />

@@ -46,11 +46,11 @@ function App() {
             // backgroundImage: `url(${image})`,
             // backgroundRepeat: "no-repeat",
             // backgroundSize: 'cover',
-            // opacity: 0.6
+            // opacity: 0.6,
             // backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
             // background: "rgba(0, 0, 0, 0.5)",
-            backgroundImage: `url(${image3})`,
+          //  backgroundImage: `url(${image3})`,
             // opacity: 0.5,
             height: "100vh",
             backgroundPosition: "center",
