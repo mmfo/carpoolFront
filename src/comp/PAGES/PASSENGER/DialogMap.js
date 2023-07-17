@@ -16,7 +16,7 @@ import { Switch, CircularProgress, Alert } from "@mui/material";
 import { Loader } from "@googlemaps/js-api-loader";
 import Travel from "../../SERVICES/TravelService";
 export default function DialogMap(props) {
-    const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
+  const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
   const [open, setOpen] = useState(false);
   const [userObj, setUserObj] = useState({});
   const [loadMap, setLoadMap] = useState(false);
@@ -30,15 +30,15 @@ export default function DialogMap(props) {
   const handleClose = () => {
     props.setOpenDialog(false);
   };
-const myObj={
+  const myObj = {
     ["SourceCity"]: props.data.sourceCity,
     ["SourceStreet"]: props.data.sourceStreet,
     ["SourceHouseNumber"]: props.data.sourceHouseNumber,
- 
+
     ["DestCity"]: props.data.destCity,
     ["DestStreet"]: props.data.destStreet,
     ["DestHouseNumber"]: props.data.destHouseNumber,
-}
+  };
   useEffect(() => {
     const options = {
       apiKey: { apikey },
@@ -59,7 +59,7 @@ const myObj={
       });
   }, []);
   return (
-    <div>
+    <Box >
       <Dialog
         open={props.openDialog}
         onClose={handleClose}
@@ -72,20 +72,18 @@ const myObj={
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-         
-          <Box style={{ display: "flex", width: "30%" }}>
-            {!loadMap ? (
-              <Box sx={{ display: "flex" }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <GMap searchTravel={myObj} />
-            )}
-          </Box>
-    
+            <Box style={{ display: "flex" }}>
+              {!loadMap ? (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <GMap searchTravel={myObj} />
+              )}
+            </Box>
           </DialogContentText>
         </DialogContent>
       </Dialog>
-    </div>
+    </Box>
   );
 }
