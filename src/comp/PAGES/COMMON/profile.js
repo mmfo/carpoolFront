@@ -8,7 +8,7 @@ import Users from "../../SERVICES/UserService";
 
 export default function Profile() {
   const data = useSelector((state) => state);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
     Users.getUsers().then((res) => {

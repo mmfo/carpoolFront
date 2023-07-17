@@ -79,7 +79,7 @@ export default function TravelSearch() {
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
   const [showMap, setShowMap] = useState(false);
-  
+
   const onChange = (selected, key) => {
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
@@ -153,8 +153,7 @@ export default function TravelSearch() {
     console.log("foundTravelList", foundTravelList);
     if (res.length == 0) {
       setEmptyFoundTravelList(true);
-    }
-    else{
+    } else {
       setEmptyFoundTravelList(false);
     }
     setloadResultSearch(false);
@@ -169,9 +168,9 @@ export default function TravelSearch() {
     id: "google-map-script",
     // googleMapsApiKey: "AIzaSyD_rM9VqK4T22X3aa29DTFOpL_r3fx1s0c", //map
   });
-useEffect(()=>{
-setShowMap(true)
-},[searchTravel])
+  useEffect(() => {
+    setShowMap(true);
+  }, [searchTravel]);
   const { ref: materialRefSource } = usePlacesWidget({
     apiKey: { apikey },
     //style:{ width: "70%" },
@@ -195,16 +194,30 @@ setShowMap(true)
     },
   });
   return (
-    <>
+    <Box>
       <Box
         sx={{
           padding: "20px",
         }}
       >
-        <Typography color="primary" variant="h4">
-          TravelSearch
-        </Typography>
-        <Box style={{ marginTop: "20px" }}>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <Typography color="primary" variant="h4">
+            TravelSearch
+          </Typography>
+        </Box>
+        <Box
+          style={{
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <FormControlLabel
             value="top"
             color="primary"
@@ -305,7 +318,6 @@ setShowMap(true)
               />
             </Box>
           )}
-          {/* </Grid> */}
 
           <Box
             style={{
@@ -331,9 +343,8 @@ setShowMap(true)
         <Box
           style={{
             display: "flex",
-            // width: "30%",
             justifyContent: "center",
-            marginRight: "10px",
+            marginRight: "80px",
           }}
         >
           {loadResultSearch ? (
@@ -341,23 +352,25 @@ setShowMap(true)
               <CircularProgress />
             </Box>
           ) : (
-            <>
-              <Box>
-                {emptyFoundTravelList && <Alert>not found</Alert>}
-                {foundTravelList.length > 0 &&
-                  foundTravelList.map((item) => {
-                    return (
-                      <Box style={{ margin: "20px" }}>
-                        <CardTravel
-                          data={item}
-                          setSearchTravel={setSearchTravel}
-                          searchTravel={searchTravel}
-                        />
-                      </Box>
-                    );
-                  })}
-              </Box>
-            </>
+            <Box>
+              {emptyFoundTravelList && (
+                <Box>
+                  <Alert severity="error">not found</Alert>
+                </Box>
+              )}
+              {foundTravelList.length > 0 &&
+                foundTravelList.map((item) => {
+                  return (
+                    <Box style={{ margin: "20px" }}>
+                      <CardTravel
+                        data={item}
+                        setSearchTravel={setSearchTravel}
+                        searchTravel={searchTravel}
+                      />
+                    </Box>
+                  );
+                })}
+            </Box>
           )}
         </Box>
 
@@ -373,6 +386,6 @@ setShowMap(true)
           </Box>
         )} */}
       </Box>
-    </>
+    </Box>
   );
 }
