@@ -16,7 +16,11 @@ import { useNavigate } from "react-router-dom";
 import Users from "../../SERVICES/UserService";
 import Alert from "@mui/material/Alert";
 import { useDispatch } from "react-redux";
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" align="center" {...props}>
@@ -31,6 +35,8 @@ import { useDispatch } from "react-redux";
 const theme = createTheme();
 
 export default function SignUp() {
+  const [open, setOpen] = useState(true);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userObj, setUserObj] = useState({
@@ -45,7 +51,13 @@ export default function SignUp() {
     UserPassword: "",
     UserPhone: "",
   });
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   const validate = (name, value) => {
     switch (name) {
       case "UserName":
@@ -99,12 +111,31 @@ export default function SignUp() {
       setErrors(validationErrors);
       return;
     }
-    var res1 = await Users.isEmailExist(userObj.UserEmail)
-    if (res1.ok)//if the email exist
-    {
-      alert(' email already in the bd , go to log in ')
-      navigate('/login')
-      return
+    var res1 = await Users.isEmailExist(userObj.UserEmail);
+    if (res1.ok) {
+      //if the email exist
+      <Box>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Email already in the db
+          </DialogTitle>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Go To Login
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>;
+      return;
     }
     if (userObj.UserName && userObj.UserEmail && userObj.UserPassword) {
       const data = {
@@ -115,13 +146,49 @@ export default function SignUp() {
       console.log("----data----", data);
       var res = await Users.createUser(userObj);
       console.log("----res----", res);
-      if (res.ok){
-      dispatch({ type: "UPDATE_CURRENT_USER1", payload: userObj });      
-      window.alert("נרשם בהצלחה!", JSON.stringify(data)); //לשנות להודעה שנרשמת בהצלחה      
-        navigate("/");
-      }
-      else{
-        alert("error !")
+      if (res.ok) {
+        dispatch({ type: "UPDATE_CURRENT_USER1", payload: userObj });
+        <Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              Signed up successfully
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Continue
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>;
+      } else {
+        <Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Go To Login
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>;
       }
     }
   };
