@@ -245,10 +245,12 @@ export default function AddTravel() {
   });
 
   return (
-    <>
+    <Box>
       <Box
         style={{
           marginTop: "30px",
+          display: "flex",
+          justifyContent:'center'
         }}
       >
         <Typography color="primary" variant="h4">
@@ -395,7 +397,7 @@ export default function AddTravel() {
                 </Button>
                 <Button
                   onClick={() => {
-                    navigate("/");
+                    navigate("/travelSearch");
                   }}
                 >
                   Search A Travel
@@ -405,6 +407,6 @@ export default function AddTravel() {
           </Box>
         )}
       </Box>
-    </>
+    </Box>
   );
 }
