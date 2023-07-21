@@ -21,6 +21,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" align="center" {...props}>
@@ -36,6 +37,9 @@ const theme = createTheme();
 
 export default function SignUp() {
   const [open, setOpen] = useState(true);
+  const [openDialogEmailExist, setOpenDialogEmailExist] = useState(false);
+  const [openDialogSignedUpError, setOpenDialogSignedUpError] = useState(false);
+  const [openDialogSignedUpSuccessfully, setOpenDialogSignedUpSuccessfully] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -114,27 +118,7 @@ export default function SignUp() {
     var res1 = await Users.isEmailExist(userObj.UserEmail);
     if (res1.ok) {
       //if the email exist
-      <Box>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            Email already in the db
-          </DialogTitle>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              Go To Login
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>;
+      setOpenDialogEmailExist(true);
       return;
     }
     if (userObj.UserName && userObj.UserEmail && userObj.UserPassword) {
@@ -146,49 +130,12 @@ export default function SignUp() {
       console.log("----data----", data);
       var res = await Users.createUser(userObj);
       console.log("----res----", res);
-      if (res.ok) {
+      if (res.ok) {//SignedUpSuccessfully
         dispatch({ type: "UPDATE_CURRENT_USER1", payload: userObj });
-        <Box>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              Signed up successfully
-            </DialogTitle>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Continue
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>;
+        setOpenDialogSignedUpSuccessfully(true)
+        return;
       } else {
-        <Box>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">Error</DialogTitle>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Go To Login
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>;
+        setOpenDialogSignedUpError(true)
       }
     }
   };
@@ -325,6 +272,71 @@ export default function SignUp() {
               </Link>
             </Box>
           </Box>
+          {openDialogEmailExist && (
+             <Box>
+             <Dialog
+               open={open}
+               onClose={handleClose}
+               aria-labelledby="alert-dialog-title"
+               aria-describedby="alert-dialog-description"
+             >
+               <DialogTitle id="alert-dialog-title">
+                 Your Email already SignUp
+               </DialogTitle>
+               <DialogActions>
+                 <Button
+                   onClick={() => {
+                     navigate("/login");
+                   }}
+                 >
+                   Go To Login
+                 </Button>
+               </DialogActions>
+             </Dialog>
+           </Box>
+          )}
+          {openDialogSignedUpSuccessfully&&( <Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              Signed up successfully
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Continue
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+        )}
+
+        {openDialogSignedUpError&&(<Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Go To Login
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>)}
         </Box>
       </Box>
 

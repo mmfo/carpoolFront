@@ -35,17 +35,17 @@ export default function TravelSearch() {
 
   const navigate = useNavigate();
   const [searchTravel, setSearchTravel] = useState({
-    //{ address: 'קהילות יעקב , קרית ספר Street, 1 House Number' }
-    SourceCity: "קרית ספר",
+    SourceCity: "",
     SourceStreet: "",
     SourceHouseNumber: "1",
 
-    DestCity: "בני ברק",
+    DestCity: "",
     DestStreet: "",
     DestHouseNumber: "1",
 
     TimeTravel: new Date(),
-    freeSpace: 1,
+    FreeSpace: 1,
+    Distance: 1000,
   });
 
   const [foundTravelList, setFoundTravelList] = useState([
@@ -79,8 +79,20 @@ export default function TravelSearch() {
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
   const [showMap, setShowMap] = useState(false);
+  const [errors, setErrors] = useState({
+    SourceCity: "",
+    SourceStreet: "",
+    SourceHouseNumber: "",
 
+    DestCity: "",
+    DestStreet: "",
+    DestHouseNumber: "",
+
+    // TimeTravel: new Date(), // new Date(),
+    // UserId: "",
+  });
   const onChange = (selected, key) => {
+    setErrors({ ...errors, [key]: validate(key, selected) });
     setSearchTravel((prev) => ({ ...prev, [key]: selected }));
   };
   const [loadMap, setLoadMap] = useState(false);
@@ -145,7 +157,29 @@ export default function TravelSearch() {
     });
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async () => {    
+    let validationErrors = {};
+    Object.keys(searchTravel).forEach((name) => {
+      const error = validate(name, searchTravel[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (
+      searchTravel.SourceCity &&
+      searchTravel.SourceStreet &&
+      searchTravel.DestCity &&
+      searchTravel.DestStreet
+    ) {
+      console.log(searchTravel);
+      searchTravel.TimeTravel = new Date(
+        searchTravel.TimeTravel.getTime() + 3 * 60 * 60 * 1000
+      );
+    }
     setloadResultSearch(true);
     var res = await Travel.TravelSearch(searchTravel);
     console.log(res);
@@ -158,11 +192,6 @@ export default function TravelSearch() {
     }
     setloadResultSearch(false);
   };
-  // const onclickmap = async () => {
-  //   var res = await Travel.NevigateRoute();
-  //   console.log(res);
-  //   setRoute(res)
-  // };
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -173,7 +202,6 @@ export default function TravelSearch() {
   }, [searchTravel]);
   const { ref: materialRefSource } = usePlacesWidget({
     apiKey: { apikey },
-    //style:{ width: "70%" },
     onPlaceSelected: (place) => {
       handleSourceAddressSelect(place);
     },
@@ -184,7 +212,6 @@ export default function TravelSearch() {
   });
   const { ref: materialRefDest } = usePlacesWidget({
     apiKey: { apikey },
-    // style:{ width: "70%" },
     onPlaceSelected: (place) => {
       handleDestAddressSelect(place);
     },
@@ -193,6 +220,44 @@ export default function TravelSearch() {
       componentRestrictions: { country: "il" },
     },
   });
+
+  const validate = (name, value) => {
+    switch (name) {
+      case "SourceCity":
+        if (!value)
+          //||value.trim() === "")
+          return "SourceCity ";
+        else return "";
+      case "SourceStreet":
+        if (!value)
+          // || value.trim() === "")
+          return " SourceStreet";
+        else return "";
+      case "SourceHouseNumber":
+        if (!value)
+          // || value.trim() === "")
+          return "SourceHouseNumber ";
+        else return "";
+      case "DestCity":
+        if (!value)
+          // || value.trim() === "")
+          return "DestCity ";
+        else return "";
+      case "DestStreet":
+        if (!value)
+          // || value.trim() === "")
+          return " DestStreet  ";
+        else return "";
+      case "DestHouseNumber":
+        if (!value)
+          // || value.trim() === "")
+          return "DestHouseNumber";
+        else return "";
+      default: {
+        return "";
+      }
+    }
+  };
   return (
     <Box>
       <Box
@@ -273,6 +338,14 @@ export default function TravelSearch() {
                   inputRef={materialRefSource}
                 />
               </Box>
+              {(errors.SourceCity ||
+                errors.SourceStreet ||
+                errors.SourceHouseNumber) && (
+                <Alert severity="error">
+                  {errors.SourceCity} {errors.SourceStreet}{" "}
+                  {errors.SourceHouseNumber}
+                </Alert>
+              )}
               <Box>
                 <Typography
                   color="primary"
@@ -289,6 +362,13 @@ export default function TravelSearch() {
                   inputRef={materialRefDest}
                 />
               </Box>
+              {(errors.DestCity ||
+                errors.DestStreet ||
+                errors.DestHouseNumber) && (
+                <Alert severity="error">
+                  {errors.DestCity} {errors.DestStreet} {errors.DestHouseNumber}
+                </Alert>
+              )}
               <Box>
                 <Typography color="primary" style={{ display: "flex" }}>
                   Free Space:
@@ -298,6 +378,19 @@ export default function TravelSearch() {
                   defaultValue="1"
                   id="outlined-basic"
                   variant="outlined"
+                  onChange={(e) => onChange(e.target.value, "FreeSpace")}
+                />
+              </Box>
+              <Box>
+                <Typography color="primary" style={{ display: "flex" }}>
+                  Distance :
+                </Typography>
+                <TextField
+                  type="number"
+                  defaultValue="1000"
+                  id="outlined-basic"
+                  variant="outlined"
+                  onChange={(e) => onChange(e.target.value, "Distance")}
                 />
               </Box>
             </Box>
@@ -363,6 +456,7 @@ export default function TravelSearch() {
                   return (
                     <Box style={{ margin: "20px" }}>
                       <CardTravel
+                        flag={true}
                         data={item}
                         setSearchTravel={setSearchTravel}
                         searchTravel={searchTravel}
@@ -373,18 +467,6 @@ export default function TravelSearch() {
             </Box>
           )}
         </Box>
-
-        {/* {foundTravelList.length > 0&& (
-          <Box style={{ display: "flex", width: "30%" }}>
-            {!loadMap ? (
-              <Box sx={{ display: "flex" }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <GMap searchTravel={searchTravel} />
-            )}
-          </Box>
-        )} */}
       </Box>
     </Box>
   );

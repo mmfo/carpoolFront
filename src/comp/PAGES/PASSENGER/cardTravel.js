@@ -15,7 +15,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AlertDialog from "./DialogMui";
 import DialogMap from "./DialogMap";
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -26,10 +31,16 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
+
+const CardTravel = ({flag, data, setSearchTravel,searchTravel }) => {
   const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogDelete, setOpenDialogDelete] = useState(false);
+
   const [openDialogMap, setOpenDialogMap] = useState(false);
+  const handleClose = () => {
+    setOpenDialogDelete(false);
+  };
   const handlecreateNavigate = () => {
     debugger;
     setSearchTravel((prev) => ({
@@ -50,6 +61,16 @@ const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const deleteTravel= async () =>{
+    debugger
+    var res = await fetch(`https://localhost:7293/api/travels/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    navigate('/driverTravels')
+  }
   return (
     <Grid item xs={4} onClick={() => navigate()}>
       <Card
@@ -70,7 +91,8 @@ const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
             <Box fontWeight="bold" display="inline">
               Source City :
             </Box>
-            {data.id+"   "}{data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
+            {/* {data.id+"   "} */}
+            {data.sourceCity}, {data.sourceStreet},{data.sourceHouseNumber}
           </Typography>
 
           {/* <Typography sx={{ mb: 1.5 }} color="primary">
@@ -85,7 +107,7 @@ const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
           <Typography sx={{ mb: 1.5 }} color="primary">
             {/* יהיה זמין בעוד חמש דקות */}
             <Box fontWeight="bold" display="inline">
-              Availability within five minutes :
+              Availability in :
             </Box>
             {data.timeTravel}
           </Typography>
@@ -103,19 +125,22 @@ const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => setOpenDialog(true)}>
+        {flag ?<Button size="small" onClick={() => setOpenDialog(true)}>
             {/* אני מעוניין בנסיעה זו */}
             Interested in this Travel
           </Button>
+          :
+          <IconButton  onClick={() => setOpenDialogDelete(true)} > <DeleteForeverIcon /></IconButton> 
+}
           <Button onClick={() => setOpenDialogMap(true)}>Show Map</Button>
-          <ExpandMore
+          {/* <ExpandMore
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
             <ExpandMoreIcon />
-          </ExpandMore>
+          </ExpandMore> */}
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
@@ -130,6 +155,24 @@ const CardTravel = ({ data, setSearchTravel,searchTravel }) => {
         openDialogMap&&
         <DialogMap openDialog={openDialogMap} setOpenDialog={setOpenDialogMap} data={data}/>
       }
+      {openDialogDelete  && (
+         <Dialog
+         open={openDialogDelete}
+         onClose={handleClose}
+         aria-labelledby="alert-dialog-title"
+         aria-describedby="alert-dialog-description"
+       >
+         <DialogTitle id="alert-dialog-title">
+          Are you sure about the deletion?
+           {/* {"בחר צורת התכתבות עם הנהג"} */}
+         </DialogTitle>
+         <DialogContent>
+           <DialogContentText id="alert-dialog-description">
+            <DialogActions><Button variant="contained" onClick={()=>deleteTravel()}>delete</Button><Button onClick={handleClose}>cancle</Button ></DialogActions>
+           </DialogContentText>
+         </DialogContent>
+       </Dialog>
+      )}
     </Grid>
   );
 };

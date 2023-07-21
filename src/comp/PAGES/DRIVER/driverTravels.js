@@ -3,22 +3,23 @@ import TravelService from "../../SERVICES/TravelService";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import CardTravel from "../PASSENGER/cardTravel";
-
+// import CardTravelDriver from './cardTravelDriver'
 export default function DriverTravels() {
   const data = useSelector((state) => state);
   const userId = data.id;
-  const [searchTravel, setSearchTravel] = useState([{
-    SourceCity: "קרית ספר",
-    SourceStreet: "",
-    SourceHouseNumber: "1",
-  },{
-    DestCity: "בני ברק",
-    DestStreet: "",
-    DestHouseNumber: "1",
-  },{
-    TimeTravel: new Date(),
-    freeSpace: 1,
-  }]);
+  const [searchTravel, setSearchTravel] = useState([
+  //   SourceCity: "קרית ספר",
+  //   SourceStreet: "",
+  //   SourceHouseNumber: "1",
+  // },{
+  //   DestCity: "בני ברק",
+  //   DestStreet: "",
+  //   DestHouseNumber: "1",
+  // },{
+  //   TimeTravel: new Date(),
+  //   freeSpace: 1,
+  ]);
+  
   const [futureTravelsByUserId, setFutureTravelsByUserId] = useState([]);
   const [pastTravelsByUserId, setPastTravelsByUserId] = useState([]);
   useEffect(() => {
@@ -58,7 +59,8 @@ export default function DriverTravels() {
           <Typography color="primary" variant="h6">
             past Travel:
           </Typography>
-          {searchTravel.map((travel) => {
+          <br/>
+          {pastTravelsByUserId.map((travel) => {
           return (
             <Box style={{ margin: "20px" }}>
               <CardTravel
@@ -81,10 +83,12 @@ export default function DriverTravels() {
             padding: "15px",
           }}
         >
+          
           <Typography color="primary" variant="h6">
             Future Travel:
           </Typography>
-          {searchTravel.map((travel) => {
+          <br/>
+          {futureTravelsByUserId.map((travel) => {
           return (
             <Box style={{ margin: "20px" }}>
               <CardTravel
@@ -99,7 +103,9 @@ export default function DriverTravels() {
           //   {travel.sourceStreet}
           // </Typography>
         })}
+        
         </Box>
+
         {/* <h1>DriverTravels</h1> */}
         {/* לעבור על הרשימה map ולהציג כל איבר */}
         {/* <Box style={{ display: "flex" }}> */}
@@ -109,7 +115,7 @@ export default function DriverTravels() {
             <Typography key={travel.id}>{travel.sourceCity}{travel.sourceStreet}</Typography>
           ))}
         </Typography> */}
-        {/* xxxx */}
+        
       </Box>
     </Box>
   );

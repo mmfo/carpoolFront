@@ -12,7 +12,6 @@ const GMap = ({ searchTravel }) => {
   }, []);
 
   useEffect(() => {
-    debugger
     if (!map) return;
 
     const geocoder = new window.google.maps.Geocoder();

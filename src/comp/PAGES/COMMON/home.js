@@ -9,7 +9,6 @@ export default function Home() {
       <Box
         sx={{
           marginTop: "150px",
-
           display: "flex",
           padding: "15px",
           justifyContent: "flex-end",

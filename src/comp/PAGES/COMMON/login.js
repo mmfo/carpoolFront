@@ -220,11 +220,11 @@ export default function Login() {
               </Button>
             </Box>
             <Box style={{ display: "flex", justifyContent: "space-around" }}>
-              <Box>
+              {/* <Box>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Box>
+              </Box> */}
               <Box>
                 <Link
                   href="#"

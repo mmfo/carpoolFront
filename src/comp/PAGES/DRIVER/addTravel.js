@@ -12,9 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
-
 import Grid from "@mui/material/Grid";
-
 import Autocomplete from "@mui/material/Autocomplete";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { debounce } from "@mui/material/utils";
@@ -57,7 +55,7 @@ export default function AddTravel() {
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
-  const apikey = "AIzaSyCFUQk0JFC-Lxpz5jpdmmtJJUFBVFmcoJI";
+  const apikey = process.env.API_KEY;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -142,12 +140,6 @@ export default function AddTravel() {
         },
         body: JSON.stringify(objTravel),
       });
-      // setErrorMessage("This travel in db!");
-      // setTimeout(() => {
-      //   setErrorMessage(" ");
-      // }, 3000);
-
-      // alert("this travel in db");
     }
     setOpenDialog(true);
   };
