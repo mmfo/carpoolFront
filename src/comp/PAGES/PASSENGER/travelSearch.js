@@ -48,34 +48,7 @@ export default function TravelSearch() {
     Distance: 1000,
   });
 
-  const [foundTravelList, setFoundTravelList] = useState([
-    // {
-    //   destCity: "Tel Aviv-Yafo",
-    //   destHouseNumber: "",
-    //   destStreet: "Allenby Street",
-    //   freeSpace: 1,
-    //   sourceCity: "Bnei Brak",
-    //   sourceHouseNumber: "",
-    //   sourceStreet: "Donnolo Street",
-    //   timeTravel: "2023-06-07T18:15:23.824Z",
-    //   userEmail: "m0583267055@gmail.com",
-    //   userName: "ג",
-    //   userPhone: null,
-    // },
-    // {
-    //   destCity: "Tel Aviv-Yafo",
-    //   destHouseNumber: "",
-    //   destStreet: "Allenby Street",
-    //   freeSpace: 1,
-    //   sourceCity: "Bnei Brak",
-    //   sourceHouseNumber: "",
-    //   sourceStreet: "Donnolo Street",
-    //   timeTravel: "2023-06-07T18:15:23.824Z",
-    //   userEmail: "m0583267055@gmail.com",
-    //   userName: "ג",
-    //   userPhone: null,
-    // },
-  ]);
+  const [foundTravelList, setFoundTravelList] = useState([]);
   const [switchCecked, setSwitchCecked] = useState(true);
   const [directions, setDirections] = useState(null);
   const [showMap, setShowMap] = useState(false);
@@ -283,7 +256,7 @@ export default function TravelSearch() {
             justifyContent: "center",
           }}
         >
-          <FormControlLabel
+          {/* <FormControlLabel
             value="top"
             color="primary"
             control={<Switch color="primary" />}
@@ -295,7 +268,7 @@ export default function TravelSearch() {
             checked={switchCecked}
             labelPlacement="top"
             onChange={() => setSwitchCecked(!switchCecked)}
-          />
+          /> */}
         </Box>
       </Box>
 

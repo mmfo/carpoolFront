@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TravelService from "../../SERVICES/TravelService";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import CardTravel from "../PASSENGER/cardTravel";
 // import CardTravelDriver from './cardTravelDriver'
@@ -8,24 +8,24 @@ export default function DriverTravels() {
   const data = useSelector((state) => state);
   const userId = data.id;
   const [searchTravel, setSearchTravel] = useState([
-  //   SourceCity: "קרית ספר",
-  //   SourceStreet: "",
-  //   SourceHouseNumber: "1",
-  // },{
-  //   DestCity: "בני ברק",
-  //   DestStreet: "",
-  //   DestHouseNumber: "1",
-  // },{
-  //   TimeTravel: new Date(),
-  //   freeSpace: 1,
+    //   SourceCity: "קרית ספר",
+    //   SourceStreet: "",
+    //   SourceHouseNumber: "1",
+    // },{
+    //   DestCity: "בני ברק",
+    //   DestStreet: "",
+    //   DestHouseNumber: "1",
+    // },{
+    //   TimeTravel: new Date(),
+    //   freeSpace: 1,
   ]);
-  
+
   const [futureTravelsByUserId, setFutureTravelsByUserId] = useState([]);
   const [pastTravelsByUserId, setPastTravelsByUserId] = useState([]);
   useEffect(() => {
-    // TravelService.getFutureTravelsByUserId(userId).then((res) => {
-    //     setFutureTravelsByUserId(res);
-    // });
+    TravelService.getFutureTravelsByUserId(userId).then((res1) => {
+      setFutureTravelsByUserId(res1);
+    });
     TravelService.getPastTravelsByUserId(userId).then((res) => {
       setPastTravelsByUserId(res);
     });
@@ -48,74 +48,76 @@ export default function DriverTravels() {
         style={{
           display: "flex",
           justifyContent: "center",
-          flexWrap:'wrap',
-
+          flexWrap: "wrap",
         }}
       >
-        <Box
-          style={{ display: "flex",
-            padding: "15px" }}
-        >
-          <Typography color="primary" variant="h6">
-            past Travel:
-          </Typography>
-          <br/>
-          {pastTravelsByUserId.map((travel) => {
-          return (
-            <Box style={{ margin: "20px" }}>
-              <CardTravel
-                data={travel}
-                setSearchTravel={setSearchTravel}
-                searchTravel={searchTravel}
-              />
-            </Box>
-          );
-          // <Typography key={travel.id}>
-          //   {travel.sourceCity}
-          //   {travel.sourceStreet}
-          // </Typography>
-        })}
+        <Box style={{ display: "flex", padding: "15px" }}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs>
+              <Typography color="primary" variant="h6">
+                Past Travel
+              </Typography>
+            </Grid>
+
+            <br />
+            {pastTravelsByUserId.map((travel) => {
+              return (
+                <Grid item xs>
+                  <Box style={{ margin: "20px" }}>
+                    <CardTravel
+                      data={travel}
+                      setSearchTravel={setSearchTravel}
+                      searchTravel={searchTravel}
+                      setPastTravelsByUserId={setPastTravelsByUserId}
+                    />
+                  </Box>
+                </Grid>
+              );
+            })}
+          </Grid>
         </Box>
         <Box
           style={{
             display: "flex",
-            // backgroundColor: "yellow",
             padding: "15px",
           }}
         >
-          
-          <Typography color="primary" variant="h6">
-            Future Travel:
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs>
+          <Typography color="primary" variant="h6" style={{direction:'rtl'}}>
+            Future Travel
           </Typography>
-          <br/>
-          {futureTravelsByUserId.map((travel) => {
-          return (
-            <Box style={{ margin: "20px" }}>
-              <CardTravel
-                data={travel}
-                setSearchTravel={setSearchTravel}
-                searchTravel={searchTravel}
-              />
-            </Box>
-          );
-          // <Typography key={travel.id}>
-          //   {travel.sourceCity}
-          //   {travel.sourceStreet}
-          // </Typography>
-        })}
-        
+          </Grid>
+          <br />
+          {futureTravelsByUserId.length > 0 &&
+            futureTravelsByUserId.map((travel) => {
+              return (
+                <Grid item xs>
+                <Box style={{ margin: "20px" }}>
+                  <CardTravel
+                    data={travel}
+                    setSearchTravel={setSearchTravel}
+                    searchTravel={searchTravel}
+                    setFutureTravelsByUserId={setFutureTravelsByUserId}
+                  />
+                </Box>
+                </Grid>
+              );
+            })}
+            </Grid>
         </Box>
 
-        {/* <h1>DriverTravels</h1> */}
-        {/* לעבור על הרשימה map ולהציג כל איבר */}
-        {/* <Box style={{ display: "flex" }}> */}
-        {/* <Typography color="primary" variant="h6">
-          All futureTravelsByUserId:
-          {futureTravelsByUserId.map((travel) => (
-            <Typography key={travel.id}>{travel.sourceCity}{travel.sourceStreet}</Typography>
-          ))}
-        </Typography> */}
-        
+
       </Box>
     </Box>
   );

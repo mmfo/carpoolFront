@@ -115,6 +115,7 @@ export default function Login() {
         } else {
           console.log(data);
           dispatch({ type: "UPDATE_CURRENT_USER", payload: data });
+          sendEmail()
           navigate("/");
         }
       } else {
@@ -122,7 +123,17 @@ export default function Login() {
       }
     }
   };
-
+  const sendEmail = async () => {
+    console.log("objUser", userObj);
+    
+    var res = await fetch(`https://localhost:7293/api/User/SendEmail`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userObj),
+    });
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -204,10 +215,10 @@ export default function Login() {
                 margin: "5px",
               }}
             >
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" />} //color="primary"
                 label="Remember me"
-              />
+              /> */}
             </Box>
             <Box style={{ marginTop: "10px", marginBottom: "10px" }}>
               <Button

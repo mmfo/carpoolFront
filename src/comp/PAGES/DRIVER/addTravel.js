@@ -62,6 +62,7 @@ export default function AddTravel() {
   };
 
   const handleClose = () => {
+    setOpenDialog(false)
     setOpen(false);
   };
 
@@ -381,8 +382,9 @@ export default function AddTravel() {
               <DialogActions>
                 <Button
                   onClick={() => {
-                    navigate("/addTravel");
-                    window.location.reload(false);
+                    handleClose();
+                    // navigate("/addTravel");
+                    // window.location.reload(false);
                   }}
                 >
                   Add A New Travel

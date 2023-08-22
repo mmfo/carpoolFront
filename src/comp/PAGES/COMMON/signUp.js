@@ -132,6 +132,7 @@ export default function SignUp() {
       console.log("----res----", res);
       if (res.ok) {//SignedUpSuccessfully
         dispatch({ type: "UPDATE_CURRENT_USER1", payload: userObj });
+        sendEmail()
         setOpenDialogSignedUpSuccessfully(true)
         return;
       } else {
@@ -142,6 +143,17 @@ export default function SignUp() {
   const onChange = (selected, key) => {
     setErrors({ ...errors, [key]: validate(key, selected) });
     setUserObj((prev) => ({ ...prev, [key]: selected }));
+  };
+  const sendEmail = async () => {
+    console.log("objUser", userObj);
+    
+    var res = await fetch(`https://localhost:7293/api/User/SendEmail`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userObj),
+    });
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -248,10 +260,10 @@ export default function SignUp() {
                 margin: "5px",
               }}
             >
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
-              />
+              /> */}
             </Box>
           </Box>
           <Button

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 
@@ -12,6 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Users from "../../SERVICES/UserService";
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const data = useSelector((state) => state);
   const [users, setUsers] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
@@ -52,11 +53,15 @@ export default function Profile() {
       },
       body: JSON.stringify(objUser),
     });
-    navigate("/");
+    if(res.ok)
+    {
+      var data= await res.json()
+    }
+    dispatch({ type: "UPDATE_CURRENT_USER", payload: data });
+    // navigate("/");
   }
 
   const beforeonSubmit = async () => {
-    debugger;
     let validationErrors = {};
     Object.keys(objUser).forEach((name) => {
       const error = validate(name, objUser[name]);
@@ -219,7 +224,7 @@ export default function Profile() {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button variant="contained" onClick={() => onSubmit()}>
+                <Button variant="contained" onClick={() =>{ onSubmit();handleClose()}}>
                   Save Changes
                 </Button>
                 <Button

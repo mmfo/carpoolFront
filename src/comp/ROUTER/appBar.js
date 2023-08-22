@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Menu, Container, Box, MenuItem, Tooltip, Avatar } from "@mui/material";
+import { useSelector } from "react-redux";
 // const useStyles = makeStyles((theme) => ({
 //   root: {
 //     flexGrow: 1,
@@ -30,13 +31,26 @@ const SpanDesign = styled("span")({
   alignSelf: "center",
   display: "inline-block",
 });
+const SpanDesign2 = styled("span")({
+  fontsize: "1.5rem",
+  marginRight: "10px",
+  textDecoration: "none",
+  color: "inherit",
+  paddingLeft: "5px",
+  alignSelf: "center",
+  display: "inline-block",
+});
 export default function ButtonAppBar() {
+  const dataState = useSelector((state) => state);
+console.log(dataState)
+console.log("dataState")
+
   const pages = [
-    { title: "login", path: "/login" },
+   { title: "login", path: "/login" },
     { title: "signup", path: "/signup" },
-    { title: "profile", path: "/profile" },
+    dataState.id!=="-5"&&  { title: "profile", path: "/profile" },
     { title: "home", path: "/" },
-    { title: "yourTravels", path: "/driverTravels" },
+    dataState.id!=="-5"&&  { title: "yourTravels", path: "/driverTravels" },
   ];
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   // const classes = useStyles();
@@ -45,7 +59,6 @@ export default function ButtonAppBar() {
   const navigate = useNavigate();
   // const menuId = 'primary-search-account-menu';
   const handleOpenNavMenu = (event) => {
-    debugger;
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
@@ -182,13 +195,18 @@ export default function ButtonAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography
+                {pages.map(({ title, path }) => (
+                  <MenuItem key={title} onClick={handleCloseUserMenu}>
+                    <Typography 
                       sx={{ width: "150px", padding: "5px" }}
                       textAlign="center"
                     >
-                      {setting} <Divider variant="middle" />
+                      <Link key={path} to={path} >
+                        <SpanDesign2>
+                          <div >{title}</div>
+                        </SpanDesign2>
+                      </Link>{" "}
+                      <Divider variant="middle" />
                     </Typography>
                   </MenuItem>
                 ))}

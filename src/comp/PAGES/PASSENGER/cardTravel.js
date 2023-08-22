@@ -21,6 +21,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import TravelService from "../../SERVICES/TravelService";
+import { useSelector } from "react-redux";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -32,7 +35,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const CardTravel = ({flag, data, setSearchTravel,searchTravel }) => {
+const CardTravel = ({flag, data, setSearchTravel,searchTravel,setPastTravelsByUserId }) => {
+  const data1 = useSelector((state) => state);
+  const userId = data1.id;
   const [expanded, setExpanded] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
@@ -42,7 +47,6 @@ const CardTravel = ({flag, data, setSearchTravel,searchTravel }) => {
     setOpenDialogDelete(false);
   };
   const handlecreateNavigate = () => {
-    debugger;
     setSearchTravel((prev) => ({
       ...prev,
       ["SourceCity"]: data.sourceCity,
@@ -62,14 +66,20 @@ const CardTravel = ({flag, data, setSearchTravel,searchTravel }) => {
     setExpanded(!expanded);
   };
   const deleteTravel= async () =>{
-    debugger
     var res = await fetch(`https://localhost:7293/api/travels/${data.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    navigate('/driverTravels')
+    handleClose()
+    // navigate('/driverTravels')
+    if(res.ok)
+    {
+      TravelService.getPastTravelsByUserId(userId).then((res) => {
+        setPastTravelsByUserId(res);
+      });
+    }
   }
   return (
     <Grid item xs={4} onClick={() => navigate()}>
@@ -149,7 +159,7 @@ const CardTravel = ({flag, data, setSearchTravel,searchTravel }) => {
         </Collapse>
       </Card>
       {openDialog && (
-        <AlertDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        <AlertDialog item={data} openDialog={openDialog} setOpenDialog={setOpenDialog} />
       )}
       {
         openDialogMap&&

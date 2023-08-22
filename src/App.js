@@ -39,7 +39,7 @@ function App() {
           //  style={{ backgroundColor: "green" }}
           // style={{ backgroundColor: "green", height: "1000px", width: "100%" }}
 
-          style={{
+          // style={{
             // backgroundColor: "green",
             // height: "650px",
             // width: "100%",
@@ -52,13 +52,13 @@ function App() {
             // background: "rgba(0, 0, 0, 0.5)",
           //  backgroundImage: `url(${image3})`,
             // opacity: 0.5,
-            height: "100vh",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            // height: "100vh",
+            // backgroundPosition: "center",
+            // backgroundRepeat: "no-repeat",
+            // backgroundSize: "cover",
 
             // opacity:0.2,
-          }}
+          // }}
         >
           <Router />
         </Box>

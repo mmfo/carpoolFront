@@ -10,14 +10,21 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 import SmsIcon from "@mui/icons-material/Sms";
 import IconButton from "@mui/material/IconButton";
+import { useSelector } from "react-redux";
 
 export default function AlertDialog(props) {
-  const [open, setOpen] = useState(false);
-  const [userObj, setUserObj] = useState({});
+  const data = useSelector((state) => state);
+  const travel_and_user=props.item
 
-  const onChange = (selected, key) => {
-    setUserObj((prev) => ({ ...prev, [key]: selected }));
-  };
+  const [open, setOpen] = useState(false);
+  const [objUser, setObjUser] = useState({
+    Id: data.id,
+    UserName: data.userName,
+    UserEmail: data.userEmail,
+    UserPassword: data.userPassword,
+    UserPhone: data.userPhone,
+  });
+
   const handleClickOpen = () => {
     props.setOpenDialog(true);
   };
@@ -26,32 +33,23 @@ export default function AlertDialog(props) {
     props.setOpenDialog(false);
   };
 
-  const sendEmail = async () => {
-    // userobj= get from redux
-    // onChange("m0583267055@gmail.com", "UserEmail")
-    // onChange("1", "UserPassword")
-    // onChange("ההההה", "UserName")
-    userObj.UserEmail = "m0583267055@gmail.com";
-    userObj.UserPassword = "1";
-    userObj.UserName = "vfghfh";
-    userObj.Id = 23;
-    console.log("userObj", userObj);
-
-    var res = await fetch(`https://localhost:7293/api/User/SendEmail`, {
+  const SendEmailWithTravelDetail = async () => {
+    console.log("objUser",  travel_and_user);
+    var res = await fetch(`https://localhost:7293/api/User/SendEmailWithTravelDetail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userObj),
+      body: JSON.stringify(travel_and_user),
     });
   };
-  const sendEmail2 = async () => {
+  const sendWhatsApp = async () => {
     var res = await fetch(`https://localhost:7293/api/User/what`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(objUser),
     });
   };
   return (
@@ -69,17 +67,17 @@ export default function AlertDialog(props) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <IconButton>
-              <WhatsAppIcon />
+              <WhatsAppIcon onClick={()=>sendWhatsApp()}/>
             </IconButton>
             <IconButton>
-              <MailOutlineIcon onClick={sendEmail} />
+              <MailOutlineIcon onClick={()=>SendEmailWithTravelDetail()} />
             </IconButton>
-            <IconButton>
-              <PhoneForwardedIcon onClick={sendEmail2} />
+            {/* <IconButton>
+              <PhoneForwardedIcon  />
             </IconButton>
             <IconButton>
               <SmsIcon />
-            </IconButton>
+            </IconButton> */}
           </DialogContentText>
         </DialogContent>
       </Dialog>
